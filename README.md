@@ -12,6 +12,8 @@ Lern-App zur Vorbereitung auf die IHK-Prüfung **Geprüfter Fachwirt für Market
 
 ## Nutzung
 
-Einfach `index.html` im Browser öffnen. Es wird nichts installiert. Der Lernfortschritt wird lokal im Browser gespeichert.
+Direkt im Browser, auch auf dem Handy: **https://cedricsprick.github.io/marketingfachwirt-trainer/**
+
+Alternativ `index.html` lokal im Browser öffnen. Es wird nichts installiert. Der Lernfortschritt wird lokal im Browser gespeichert.
 
 Hinweis: Prüfungstermine, Fristen und Gebühren unterscheiden sich je IHK. Die App ersetzt keinen Vorbereitungslehrgang.
