@@ -1,0 +1,966 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Marketingfachwirt Trainer</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: Lernheft mit Textmarker. Sticky Kopfzeile mit Reitern, darunter eine Spalte (max 860px), Inhalte als Karteikarten-artige Blöcke. */
+:root{
+  --paper:#F3F5F1;
+  --sheet:#FFFFFF;
+  --ink:#18202C;
+  --muted:#5A6472;
+  --line:#D9DED6;
+  --accent:#2440C8;
+  --accent-soft:#E4E9FB;
+  --mark:#F4E25A;
+  --mark-ink:#18202C;
+  --ok:#1F7A4A;
+  --ok-soft:#DDF1E5;
+  --bad:#B4322A;
+  --bad-soft:#F8E1DE;
+  --f-display:"Bricolage Grotesque", "Avenir Next", "Segoe UI", sans-serif;
+  --f-body:"Atkinson Hyperlegible", "Segoe UI", system-ui, sans-serif;
+  --f-mono:"JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  --a1:#2440C8; --a2:#B5541C; --a3:#1F7A4A; --a4:#7B3FA8;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#11151B; --sheet:#1A2029; --ink:#E7EAF0; --muted:#9AA4B2; --line:#2C3440;
+    --accent:#8EA2FF; --accent-soft:#232C4A; --mark:#6E6420; --mark-ink:#FFF7C2;
+    --ok:#6FD39C; --ok-soft:#173326; --bad:#F08D84; --bad-soft:#3A1E1C;
+    --a1:#8EA2FF; --a2:#F0A06C; --a3:#6FD39C; --a4:#C9A0F0;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#11151B; --sheet:#1A2029; --ink:#E7EAF0; --muted:#9AA4B2; --line:#2C3440;
+  --accent:#8EA2FF; --accent-soft:#232C4A; --mark:#6E6420; --mark-ink:#FFF7C2;
+  --ok:#6FD39C; --ok-soft:#173326; --bad:#F08D84; --bad-soft:#3A1E1C;
+  --a1:#8EA2FF; --a2:#F0A06C; --a3:#6FD39C; --a4:#C9A0F0;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.55;}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--sheet)}
+h1,h2,h3,h4{font-family:var(--f-display);line-height:1.15;text-wrap:balance;margin:0}
+h1{font-size:clamp(1.7rem,4vw,2.3rem);font-weight:800;letter-spacing:-.01em}
+h2{font-size:1.45rem;font-weight:700}
+h3{font-size:1.12rem;font-weight:700}
+p{margin:0}
+button{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px;border-radius:6px}
+mark,.mk{background:linear-gradient(transparent 12%,var(--mark) 12%,var(--mark) 88%,transparent 88%);color:var(--mark-ink);padding:0 .15em;border-radius:2px}
+.wrap{max-width:860px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+
+/* Header */
+header.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:9;background:var(--sheet);border-bottom:1px solid var(--line)}
+.top .wrap{display:flex;flex-direction:column;gap:8px;padding-block:12px 0}
+.brand{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.brand b{font-family:var(--f-display);font-weight:800;font-size:1.15rem}
+.brand span{font-size:.8rem;}
+@media (max-width:420px){.brand span{display:none}}
+.brand span{color:var(--muted);letter-spacing:.04em;text-transform:uppercase}
+nav.tabs{display:flex;gap:2px;overflow-x:auto;scrollbar-width:none;margin:0 -4px}
+nav.tabs::-webkit-scrollbar{display:none}
+nav.tabs button{border:0;background:none;padding:10px clamp(7px,2vw,12px) 12px;cursor:pointer;font-weight:700;color:var(--muted);border-bottom:3px solid transparent;white-space:nowrap}
+nav.tabs button[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--accent)}
+nav.tabs button:hover{color:var(--ink)}
+@media (max-width:480px){nav.tabs{display:grid;grid-template-columns:repeat(6,auto);justify-content:space-between;margin:0}nav.tabs button{font-size:.86rem;padding:10px 2px 12px}}
+
+main{padding-block:24px 64px}
+.view{display:flex;flex-direction:column;gap:20px}
+.lead{color:var(--muted);max-width:62ch}
+.eyebrow{font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:700}
+.panel{background:var(--sheet);border:1px solid var(--line);border-radius:12px;padding:18px;display:flex;flex-direction:column;gap:12px;min-width:0}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:12px}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.muted{color:var(--muted)}
+.small{font-size:.88rem}
+.tbl{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:.93rem}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-weight:700;background:var(--paper)}
+td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
+code,.mono{font-family:var(--f-mono);font-size:.88em}
+.formula{font-family:var(--f-mono);background:var(--paper);border:1px solid var(--line);border-radius:8px;padding:8px 12px;font-size:.9rem;overflow-x:auto}
+
+/* Buttons & chips */
+.btn{border:1.5px solid var(--ink);background:var(--ink);color:var(--sheet);border-radius:999px;padding:9px 18px;font-weight:700;cursor:pointer}
+.btn.ghost{background:transparent;color:var(--ink);border-color:var(--line)}
+.btn.ghost:hover{border-color:var(--ink)}
+.chip{border:1.5px solid var(--line);background:var(--sheet);border-radius:999px;padding:6px 14px;cursor:pointer;font-weight:700;font-size:.9rem}
+.chip[aria-pressed="true"]{border-color:var(--accent);background:var(--accent-soft);color:var(--accent)}
+.dot{display:inline-block;width:10px;height:10px;border-radius:50%;flex:none}
+
+/* Areas */
+.area-card{display:flex;flex-direction:column;gap:10px;border-top:5px solid var(--c)}
+.area-card h3{display:flex;gap:8px;align-items:baseline}
+.area-card .n{font-family:var(--f-mono);font-size:.8rem;color:var(--c);font-weight:600}
+.bar{height:8px;background:var(--paper);border-radius:99px;overflow:hidden;border:1px solid var(--line)}
+.bar i{display:block;height:100%;background:var(--c,var(--accent));border-radius:99px}
+.stat{display:flex;justify-content:space-between;font-size:.88rem;color:var(--muted);font-variant-numeric:tabular-nums}
+
+.countdown{display:flex;gap:18px;flex-wrap:wrap;align-items:flex-end}
+.countdown .big{font-family:var(--f-display);font-weight:800;font-size:3rem;line-height:1;font-variant-numeric:tabular-nums}
+
+/* Lessons */
+details.lesson{background:var(--sheet);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+details.lesson>summary{list-style:none;cursor:pointer;padding:14px 16px;display:flex;gap:12px;align-items:center}
+details.lesson>summary::-webkit-details-marker{display:none}
+details.lesson>summary .t{flex:1;min-width:0;font-weight:700}
+details.lesson>summary .chev{transition:transform .2s;color:var(--muted)}
+details.lesson[open]>summary .chev{transform:rotate(90deg)}
+.check{width:22px;height:22px;border-radius:50%;border:2px solid var(--line);display:grid;place-items:center;flex:none;font-size:.75rem;font-weight:700}
+.check.done{background:var(--ok);border-color:var(--ok);color:var(--sheet)}
+.lesson-body{padding:4px 16px 18px;display:flex;flex-direction:column;gap:14px;border-top:1px solid var(--line)}
+.lesson-body ul,.lesson-body ol{margin:0;padding-left:1.25em;display:flex;flex-direction:column;gap:4px}
+.lesson-body h4{font-size:1rem;margin-top:6px}
+.box{border-radius:10px;padding:12px 14px;display:flex;flex-direction:column;gap:6px}
+.box .lbl{font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;font-weight:700}
+.box.studio{background:var(--accent-soft)}
+.box.studio .lbl{color:var(--accent)}
+.box.trap{background:var(--bad-soft)}
+.box.trap .lbl{color:var(--bad)}
+.box.exam{background:var(--ok-soft)}
+.box.exam .lbl{color:var(--ok)}
+.area-head{display:flex;gap:6px 10px;align-items:center;flex-wrap:wrap;margin-top:8px}
+.area-head h3{flex:1 1 220px;min-width:0}
+.area-head .pts{font-size:.82rem;color:var(--muted)}
+
+/* Quiz */
+.qcard{gap:16px}
+.qprog{display:flex;flex-wrap:wrap;gap:4px 12px;justify-content:space-between;font-size:.85rem;color:var(--muted);font-variant-numeric:tabular-nums}
+.qtext{font-size:1.15rem;font-weight:700;font-family:var(--f-display)}
+.opts{display:flex;flex-direction:column;gap:8px}
+.opt{text-align:left;border:1.5px solid var(--line);background:var(--sheet);border-radius:10px;padding:12px 14px;cursor:pointer}
+.opt:hover:not(:disabled){border-color:var(--ink)}
+.opt.right{border-color:var(--ok);background:var(--ok-soft)}
+.opt.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.opt:disabled{cursor:default}
+.feedback{border-left:4px solid var(--c,var(--ok));padding:8px 12px;background:var(--paper);border-radius:0 8px 8px 0}
+
+/* Flashcards */
+.flash{perspective:1200px;min-height:230px;cursor:pointer}
+.flash-inner{position:relative;min-height:230px;transition:transform .45s;transform-style:preserve-3d}
+.flash.flipped .flash-inner{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;background:var(--sheet);border:1px solid var(--line);border-radius:14px;padding:22px;display:flex;flex-direction:column;justify-content:center;gap:10px;overflow:auto}
+.face.back{transform:rotateY(180deg);border-color:var(--accent)}
+.face .term{font-family:var(--f-display);font-weight:800;font-size:1.6rem}
+.face .hint{font-size:.82rem;color:var(--muted)}
+
+/* Calc */
+.calc input{font:inherit;font-family:var(--f-mono);font-size:1.05rem;padding:10px 12px;border:1.5px solid var(--line);border-radius:10px;background:var(--sheet);color:var(--ink);width:min(220px,100%)}
+.calc input:focus{border-color:var(--accent);outline:none}
+.given{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,180px),1fr));gap:8px}
+.given div{background:var(--paper);border-radius:8px;padding:8px 10px;font-variant-numeric:tabular-nums}
+.given small{display:block;color:var(--muted);font-size:.78rem}
+.steps{font-family:var(--f-mono);font-size:.84rem;white-space:pre;background:var(--paper);border-radius:8px;padding:10px 12px;overflow-x:auto}
+
+.reveal{display:flex;flex-direction:column;gap:10px}
+.solution{border-left:4px solid var(--ok);padding:10px 14px;background:var(--ok-soft);border-radius:0 10px 10px 0;display:flex;flex-direction:column;gap:8px}
+.solution ul{margin:0;padding-left:1.2em}
+footer{color:var(--muted);font-size:.82rem;padding-block:0 32px}
+@media (prefers-reduced-motion: reduce){*{transition:none!important}}
+</style>
+
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <div class="brand"><b>Marketingfachwirt Trainer</b><span>Bachelor Professional in Marketing · IHK</span></div>
+    <nav class="tabs" role="tablist" aria-label="Bereiche der App">
+      <button role="tab" data-view="start" id="tab-start">Start</button>
+      <button role="tab" data-view="lernen" id="tab-lernen">Lernen</button>
+      <button role="tab" data-view="quiz" id="tab-quiz">Quiz</button>
+      <button role="tab" data-view="karten" id="tab-karten">Karten</button>
+      <button role="tab" data-view="rechnen" id="tab-rechnen">Rechnen</button>
+      <button role="tab" data-view="pruefung" id="tab-pruefung">Prüfung</button>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="view" id="view-start"></section>
+  <section class="view" id="view-lernen" hidden></section>
+  <section class="view" id="view-quiz" hidden></section>
+  <section class="view" id="view-karten" hidden></section>
+  <section class="view" id="view-rechnen" hidden></section>
+  <section class="view" id="view-pruefung" hidden></section>
+</main>
+<footer class="wrap">Grundlage: Verordnung MarketFachwBAProFV vom 21.09.2023 und DIHK-Strukturierung der schriftlichen Prüfung. Prüfungstermine und Gebühren können je IHK abweichen; bitte bei deiner IHK prüfen. Dein Lernfortschritt wird nur in diesem Browser gespeichert.</footer>
+
+<script>
+/* ============ DATEN ============ */
+const AREAS = [
+  {id:1, name:"Marketingstrategien entwickeln", short:"Strategie", c:"var(--a1)", pts:"Klausur 1: ca. 45 P · Klausur 2: ca. 5 P"},
+  {id:2, name:"Marketingkonzepte und -projekte planen und umsetzen", short:"Konzepte & Projekte", c:"var(--a2)", pts:"Klausur 1: ca. 45 P · Klausur 2: ca. 40 P"},
+  {id:3, name:"Marketingprozesse analysieren, bewerten und weiterentwickeln", short:"Controlling & Qualität", c:"var(--a3)", pts:"Klausur 1: ca. 5 P · Klausur 2: ca. 30 P"},
+  {id:4, name:"Kommunikation, Führung und Zusammenarbeit sicherstellen", short:"Führung & Kommunikation", c:"var(--a4)", pts:"Klausur 1: ca. 5 P · Klausur 2: ca. 25 P"}
+];
+
+const LESSONS = [
+/* ---------- Bereich 1 ---------- */
+{id:"1-1",a:1,t:"Markt-Grundbegriffe: Volumen, Potenzial, Anteil",b:`
+<p>Bevor man über Strategie spricht, muss man den Markt <b>messen</b> können. Drei Größen kommen immer wieder:</p>
+<ul>
+<li><b>Marktpotenzial:</b> maximal mögliche Absatzmenge, wenn <i>alle</i> möglichen Kunden kaufen würden.</li>
+<li><b>Marktvolumen:</b> tatsächlich realisierter Absatz bzw. Umsatz aller Anbieter in einem Zeitraum.</li>
+<li><b>Marktanteil:</b> dein Anteil am Marktvolumen.</li>
+</ul>
+<div class="formula">Marktanteil (%) = eigener Umsatz ÷ Marktvolumen × 100<br>Relativer Marktanteil = eigener Marktanteil ÷ Marktanteil des größten Konkurrenten</div>
+<p><b>Sättigungsgrad</b> = Marktvolumen ÷ Marktpotenzial × 100. Hoher Sättigungsgrad heißt: Wachstum geht nur noch auf Kosten der Konkurrenz (Verdrängungswettbewerb).</p>
+<p><b>Käufermarkt</b> (Angebot &gt; Nachfrage, Kunde hat Macht, Normalfall heute) vs. <b>Verkäufermarkt</b> (Nachfrage &gt; Angebot).</p>`,
+trap:"Ein relativer Marktanteil über 1 bedeutet Marktführer. Er wird als Faktor angegeben, nicht in Prozent."},
+{id:"1-2",a:1,t:"Marktforschung: Arten und Methoden",b:`
+<table><tr><th></th><th>Primärforschung</th><th>Sekundärforschung</th></tr>
+<tr><td>Was</td><td>Daten neu selbst erheben</td><td>vorhandene Daten auswerten</td></tr>
+<tr><td>Vorteil</td><td>passgenau, aktuell, exklusiv</td><td>günstig, schnell</td></tr>
+<tr><td>Nachteil</td><td>teuer, zeitaufwendig</td><td>nicht für die eigene Frage erhoben, evtl. veraltet, Konkurrenz kennt sie</td></tr></table>
+<p><b>Quantitativ</b> (wie viele? viele Befragte, standardisiert) vs. <b>qualitativ</b> (warum? wenige Befragte, Tiefeninterview, Fokusgruppe).</p>
+<h4>Erhebungsmethoden der Primärforschung</h4>
+<ul>
+<li><b>Befragung:</b> schriftlich/online, telefonisch, persönlich. Vorteil Online: günstig, schnell; Nachteil: geringe Rücklaufquote, Stichprobe evtl. nicht repräsentativ.</li>
+<li><b>Beobachtung:</b> Verhalten wird erfasst, ohne zu fragen (z. B. Laufwege im Laden, Eye-Tracking, Website-Heatmaps).</li>
+<li><b>Experiment / Test:</b> eine Größe wird verändert, Wirkung gemessen (z. B. A/B-Test, Testmarkt).</li>
+<li><b>Panel:</b> gleiche Personengruppe wird regelmäßig zum gleichen Thema befragt; zeigt Entwicklungen. Risiko: Paneleffekt (Teilnehmer verhalten sich anders, weil sie beobachtet werden).</li>
+</ul>
+<h4>Stichprobe</h4>
+<p>Man befragt nicht alle (Vollerhebung), sondern eine <b>Teilerhebung</b>. Sie soll <b>repräsentativ</b> sein, also die Grundgesamtheit verkleinert abbilden.</p>
+<ul><li><b>Zufallsauswahl:</b> jedes Element hat dieselbe Chance.</li><li><b>Quotenauswahl:</b> Merkmale (z. B. Alter, Geschlecht) werden in gleichen Anteilen wie in der Grundgesamtheit vorgegeben.</li></ul>
+<h4>Gütekriterien</h4>
+<ul><li><b>Objektivität:</b> Ergebnis hängt nicht vom Forscher ab.</li><li><b>Reliabilität:</b> Zuverlässigkeit; bei Wiederholung kommt dasselbe heraus.</li><li><b>Validität:</b> Gültigkeit; man misst wirklich das, was man messen will.</li></ul>`,
+trap:"Reliabilität und Validität werden gern verwechselt. Eine Waage, die immer 2 kg zu viel anzeigt, ist reliabel (immer gleich), aber nicht valide (falsch).",
+exam:"Typische Aufgabe: „Schlagen Sie eine geeignete Marktforschungsmethode vor und begründen Sie Ihre Wahl.“ Immer Methode + Begründung aus der Situation + ein Nachteil."},
+{id:"1-3",a:1,t:"Analyse-Werkzeuge: SWOT, PESTEL, Porter, BCG, Lebenszyklus",b:`
+<h4>SWOT</h4>
+<table><tr><th></th><th>Intern</th><th>Extern</th></tr><tr><td>Positiv</td><td>Strengths (Stärken)</td><td>Opportunities (Chancen)</td></tr><tr><td>Negativ</td><td>Weaknesses (Schwächen)</td><td>Threats (Risiken)</td></tr></table>
+<p>Strategien aus der SWOT-Matrix: <b>SO</b> (Stärken nutzen für Chancen), <b>WO</b> (Schwächen abbauen, um Chancen zu nutzen), <b>ST</b> (Stärken gegen Risiken), <b>WT</b> (Schwächen abbauen, Risiken vermeiden).</p>
+<h4>PESTEL (Umweltanalyse, extern)</h4>
+<p><b>P</b>olitisch, <b>E</b>conomic/ökonomisch, <b>S</b>oziokulturell, <b>T</b>echnologisch, <b>E</b>cological/ökologisch, <b>L</b>egal/rechtlich. Liefert die Chancen und Risiken für die SWOT.</p>
+<h4>Five Forces nach Porter (Branchenanalyse)</h4>
+<ol><li>Rivalität unter bestehenden Wettbewerbern</li><li>Bedrohung durch neue Anbieter</li><li>Bedrohung durch Ersatzprodukte (Substitute)</li><li>Verhandlungsmacht der Kunden</li><li>Verhandlungsmacht der Lieferanten</li></ol>
+<h4>BCG-Matrix (Portfolio)</h4>
+<table><tr><th></th><th>Rel. Marktanteil niedrig</th><th>Rel. Marktanteil hoch</th></tr>
+<tr><td>Marktwachstum hoch</td><td><b>Question Mark</b>: investieren oder aufgeben</td><td><b>Star</b>: investieren, ausbauen</td></tr>
+<tr><td>Marktwachstum niedrig</td><td><b>Poor Dog</b>: eliminieren</td><td><b>Cash Cow</b>: abschöpfen, finanziert die anderen</td></tr></table>
+<h4>Produktlebenszyklus</h4>
+<p>Einführung → Wachstum → Reife → Sättigung → Rückgang. In der Einführung ist der Gewinn meist negativ (hohe Kosten, wenig Umsatz). Das Umsatzmaximum liegt in Reife/Sättigung.</p>`,
+trap:"Chancen und Risiken sind immer extern. „Wir könnten TikTok nutzen“ ist eine Maßnahme, keine Chance."},
+{id:"1-4",a:1,t:"Zielgruppen und Marktsegmentierung",b:`
+<p>Segmentierung heißt: den Gesamtmarkt in <b>in sich ähnliche</b> Käufergruppen aufteilen, die sich <b>untereinander unterscheiden</b>. Dann wählt man aus, welche Segmente man bearbeitet (Zielgruppen).</p>
+<h4>Segmentierungskriterien</h4>
+<ul>
+<li><b>Geografisch:</b> Land, Region, Stadt/Land</li>
+<li><b>Soziodemografisch:</b> Alter, Geschlecht, Einkommen, Beruf, Bildung, Familienstand</li>
+<li><b>Psychografisch:</b> Lebensstil, Werte, Einstellungen, Persönlichkeit (z. B. Sinus-Milieus)</li>
+<li><b>Verhaltensorientiert:</b> Kaufhäufigkeit, Markentreue, Preissensibilität, Mediennutzung, Nutzungsanlass</li>
+</ul>
+<p>Im B2B-Marketing: Branche, Unternehmensgröße, Standort, Buying Center.</p>
+<h4>Anforderungen an Segmente</h4>
+<ul><li><b>Messbar</b> (man kann sie erfassen)</li><li><b>Erreichbar</b> (über Medien/Vertrieb ansprechbar)</li><li><b>Groß genug</b> (wirtschaftlich lohnend)</li><li><b>Zeitlich stabil</b></li><li><b>Kaufverhaltensrelevant</b> (Unterschied wirkt sich auf Kauf aus)</li></ul>
+<p><b>Persona:</b> fiktive, aber typische Person, die ein Segment lebendig macht (Name, Alter, Ziele, Probleme, Mediennutzung).</p>`,
+trap:"Alter und Einkommen sind soziodemografisch, nicht psychografisch. Psychografisch ist alles, was im Kopf passiert: Werte, Einstellungen, Lebensstil."},
+{id:"1-5",a:1,t:"Marketingziele: SMART und Zielarten",b:`
+<p>Ziele müssen <b>SMART</b> sein: <b>S</b>pezifisch, <b>M</b>essbar, <b>A</b>ttraktiv/akzeptiert, <b>R</b>ealistisch, <b>T</b>erminiert.</p>
+<div class="formula">Nicht SMART: „Wir wollen bekannter werden.“<br>SMART: „Die gestützte Bekanntheit der Marke bei Frauen von 25 bis 40 in NRW steigt bis 30.06.2027 von 20 % auf 35 %.“</div>
+<h4>Zielarten</h4>
+<ul><li><b>Ökonomische Ziele:</b> direkt in Geld/Menge messbar: Umsatz, Absatz, Marktanteil, Deckungsbeitrag, Gewinn.</li>
+<li><b>Psychografische (außerökonomische) Ziele:</b> wirken im Kopf des Kunden: Bekanntheit, Image, Kundenzufriedenheit, Kundenbindung, Präferenz.</li></ul>
+<h4>Zielbeziehungen</h4>
+<ul><li><b>Komplementär:</b> Ziel A fördert Ziel B (mehr Zufriedenheit → mehr Wiederkäufe).</li><li><b>Konkurrierend:</b> Ziel A behindert Ziel B (Kosten senken vs. Qualität steigern).</li><li><b>Indifferent:</b> keine Wirkung aufeinander.</li></ul>
+<p><b>Zielhierarchie:</b> Unternehmensziele → Marketingziele → Instrumentalziele (z. B. Kommunikationsziele) .</p>`,
+trap:"Psychografische Ziele sind schwerer messbar, aber nicht unmessbar: Bekanntheit misst man mit Befragungen, Zufriedenheit mit Kundenumfragen oder dem Net Promoter Score."},
+{id:"1-6",a:1,t:"Strategien: Ansoff, Porter, Marktbearbeitung, Positionierung",b:`
+<h4>Ansoff (Wachstumsrichtung)</h4>
+<table><tr><th></th><th>Bestehender Markt</th><th>Neuer Markt</th></tr><tr><td>Bestehendes Produkt</td><td><b>Marktdurchdringung</b> (geringstes Risiko)</td><td><b>Marktentwicklung</b></td></tr><tr><td>Neues Produkt</td><td><b>Produktentwicklung</b></td><td><b>Diversifikation</b> (höchstes Risiko)</td></tr></table>
+<p>Diversifikation gibt es <b>horizontal</b> (verwandte Produkte, gleiche Stufe), <b>vertikal</b> (vor- oder nachgelagerte Stufe) und <b>lateral</b> (völlig neues Feld).</p>
+<h4>Wettbewerbsstrategien nach Porter</h4>
+<ul><li><b>Kostenführerschaft:</b> günstigster Anbieter durch niedrige Kosten (z. B. Aldi).</li><li><b>Differenzierung:</b> einzigartige Leistung, für die Kunden mehr zahlen (z. B. Apple).</li><li><b>Nische / Fokus:</b> Konzentration auf ein kleines Segment, dort mit Kosten- oder Differenzierungsvorteil.</li></ul>
+<p>Wer sich nicht entscheidet, sitzt „zwischen den Stühlen“ (stuck in the middle).</p>
+<h4>Marktbearbeitung</h4>
+<ul><li><b>Undifferenziert:</b> ein Angebot für alle (Massenmarkt).</li><li><b>Differenziert:</b> je Segment ein eigener Marketing-Mix.</li><li><b>Konzentriert:</b> nur ein Segment wird bearbeitet.</li></ul>
+<h4>Positionierung</h4>
+<p>Die gewünschte Stellung im Kopf der Zielgruppe gegenüber der Konkurrenz. Darstellung oft als <b>Positionierungskreuz</b> mit zwei kaufrelevanten Achsen (z. B. Preis und Kreativität). Kern ist die <b>USP</b> (Unique Selling Proposition): das einzigartige Nutzenversprechen.</p>
+<h4>Internationale Markteintrittsformen</h4>
+<p>Von geringem zu hohem Kapitaleinsatz, Risiko und Kontrolle: indirekter Export → direkter Export → Lizenzvergabe → Franchising → Joint Venture → eigene Tochtergesellschaft.</p>`,
+exam:"Begründe eine Strategie immer mit der Situationsbeschreibung (Stärken, Markt, Budget). Eine Strategie ohne Bezug zum Fall bringt kaum Punkte."},
+{id:"1-7",a:1,t:"Strategien kommunizieren und umsetzen",b:`
+<p>Eine Strategie wirkt nur, wenn Mitarbeitende und Partner sie verstehen und mittragen.</p>
+<ul>
+<li><b>Interne Kommunikation:</b> Kick-off, Mitarbeiterversammlung, Intranet, Teammeetings. Ziel: Verständnis, Akzeptanz, Motivation.</li>
+<li><b>Externe Kommunikation:</b> Kunden, Handelspartner, Lieferanten, Presse.</li>
+<li><b>Widerstände:</b> Angst vor Veränderung, fehlende Information, Mehrarbeit. Gegenmittel: früh informieren, Betroffene beteiligen, Nutzen zeigen, Qualifizierung anbieten.</li>
+<li><b>Umsetzung:</b> Strategie in operative Ziele, Maßnahmen, Budgets, Verantwortliche und Termine herunterbrechen (Maßnahmenplan).</li>
+<li><b>Balanced Scorecard:</b> übersetzt Strategie in Kennzahlen aus vier Perspektiven: Finanzen, Kunden, interne Prozesse, Lernen und Entwicklung.</li>
+</ul>
+<p><b>Rahmenbedingungen</b> intern (Budget, Personal, Know-how, Unternehmenskultur) und extern (Recht, Markt, Wettbewerb) müssen berücksichtigt werden.</p>`}
+,
+/* ---------- Bereich 2 ---------- */
+{id:"2-1",a:2,t:"Marketing-Mix: 4P und 7P",b:`
+<table><tr><th>P</th><th>Leitfrage</th><th>Gehört dazu</th></tr>
+<tr><td>Product</td><td>Was bekommt der Kunde?</td><td>Leistung, Qualität, Varianten, Pakete, Marke, Verpackung, Service</td></tr>
+<tr><td>Price</td><td>Was zahlt er, und wie?</td><td>Preishöhe, Rabatte, Konditionen, Ratenzahlung</td></tr>
+<tr><td>Place</td><td>Über welchen Weg / wann kommt er ans Angebot?</td><td>Vertriebswege, Vermittler, Standort, Öffnungszeiten, Online-Buchung, Logistik</td></tr>
+<tr><td>Promotion</td><td>Wodurch erfährt er davon?</td><td>Werbung, Social Media, PR, Messen, Verkaufsförderung, Sponsoring</td></tr></table>
+<p>Für <b>Dienstleistungen</b> erweitert man auf <b>7P</b>: zusätzlich <b>People</b> (Personal), <b>Process</b> (Ablauf der Leistung) und <b>Physical Evidence</b> (sichtbare Ausstattung, z. B. Räume, Website).</p>
+<p>Die Instrumente müssen zur Strategie und zueinander passen (<b>strategiekonform, konsistent</b>).</p>`,
+trap:"Öffnungszeiten und Erreichbarkeit gehören zu Place. Ein neues Paket ist Product, auch wenn es Geld kostet."},
+{id:"2-2",a:2,t:"Produkt- und Markenpolitik",b:`
+<h4>Produktpolitische Entscheidungen</h4>
+<ul>
+<li><b>Produktinnovation:</b> völlig neues Produkt.</li>
+<li><b>Produktvariation:</b> bestehendes Produkt wird verändert und ersetzt das alte (Relaunch).</li>
+<li><b>Produktdifferenzierung:</b> zusätzliche Varianten neben dem bestehenden Produkt.</li>
+<li><b>Produktelimination:</b> Produkt wird vom Markt genommen.</li>
+</ul>
+<p><b>Sortiment:</b> Breite = Anzahl Produktlinien; Tiefe = Anzahl Varianten je Linie.</p>
+<h4>Markenstrategien</h4>
+<ul><li><b>Einzelmarke:</b> jedes Produkt eigene Marke (z. B. Ferrero mit Nutella, Kinder, Duplo).</li>
+<li><b>Familienmarke:</b> eine Produktgruppe unter einer Marke (z. B. Nivea).</li>
+<li><b>Dachmarke:</b> alle Produkte unter dem Unternehmensnamen (z. B. Dr. Oetker, Siemens).</li></ul>
+<p><b>Funktionen einer Marke:</b> Orientierung, Vertrauen, Qualitätsversprechen, Prestige, Preisspielraum.</p>
+<h4>Neuproduktentwicklung</h4>
+<p>Ideengewinnung → Ideenbewertung (Scoring) → Konzept → Entwicklung/Test → Markteinführung.</p>`},
+{id:"2-3",a:2,t:"Preispolitik",b:`
+<h4>Preisbildung</h4>
+<ul><li><b>Kostenorientiert:</b> Kosten + Gewinnzuschlag. Untergrenze langfristig: Selbstkosten; kurzfristig: variable Kosten.</li>
+<li><b>Nachfrageorientiert:</b> was Kunden zu zahlen bereit sind (Zahlungsbereitschaft).</li>
+<li><b>Wettbewerbsorientiert:</b> Orientierung am Preis der Konkurrenz oder am Leitpreis.</li></ul>
+<h4>Preisstrategien</h4>
+<ul><li><b>Skimming (Abschöpfung):</b> hoher Einführungspreis, später senken. Für Innovationen mit Vorsprung.</li>
+<li><b>Penetration:</b> niedriger Einführungspreis, um schnell Marktanteile zu gewinnen, später erhöhen.</li>
+<li><b>Premium- vs. Niedrigpreisstrategie</b> (dauerhafte Preislage).</li></ul>
+<h4>Preisdifferenzierung</h4>
+<p>Gleiche Leistung, unterschiedliche Preise: <b>zeitlich</b> (Happy Hour, Wochenendaufschlag), <b>räumlich</b> (Stadt vs. Land), <b>personell</b> (Studenten, Senioren), <b>mengenmäßig</b> (Staffelrabatt), <b>leistungsbezogen</b> (Basic/Premium).</p>
+<h4>Preiselastizität der Nachfrage</h4>
+<div class="formula">Preiselastizität = prozentuale Mengenänderung ÷ prozentuale Preisänderung</div>
+<p>Betrag größer 1: <b>elastisch</b> (Kunden reagieren stark), kleiner 1: <b>unelastisch</b>.</p>
+<h4>Konditionenpolitik</h4><p>Rabatte (Mengen-, Treue-, Frühbucherrabatt), Skonto, Zahlungsziel, Lieferbedingungen.</p>
+<p><b>Psychologische Preise:</b> 249 € statt 250 €, Ankerpreise, Preisbündelung.</p>`,
+trap:"Bei Premiumpositionierung schaden dauerhafte Rabattaktionen dem Image. In der Prüfung immer prüfen, ob die Preismaßnahme zur Positionierung passt."},
+{id:"2-4",a:2,t:"Distributionspolitik",b:`
+<ul><li><b>Direkter Vertrieb:</b> Hersteller → Kunde (eigener Shop, Außendienst, Website).</li>
+<li><b>Indirekter Vertrieb:</b> über Absatzmittler (Groß-/Einzelhandel, Plattformen).</li></ul>
+<h4>Distributionsdichte</h4>
+<ul><li><b>Intensiv:</b> möglichst überall (Kaugummi).</li><li><b>Selektiv:</b> ausgewählte Händler nach Kriterien (Markenkosmetik).</li><li><b>Exklusiv:</b> sehr wenige Händler, oft mit Gebietsschutz (Luxusuhren).</li></ul>
+<h4>Absatzhelfer vs. Absatzmittler</h4>
+<p><b>Absatzmittler</b> kaufen die Ware und verkaufen sie weiter (Handel). <b>Absatzhelfer</b> unterstützen nur, ohne Eigentum (Handelsvertreter, Makler, Kommissionär, Logistiker).</p>
+<h4>Multichannel und Omnichannel</h4>
+<p><b>Multichannel:</b> mehrere Kanäle nebeneinander. <b>Omnichannel:</b> Kanäle sind vernetzt (online bestellen, im Laden abholen). Risiko: Kanalkonflikte (Preisunterschiede zwischen Kanälen).</p>
+<p><b>Entscheidungskriterien</b> für Vertriebswege: Kosten, Kontrolle, Reichweite, Erklärungsbedarf des Produkts, Zielgruppe.</p>`},
+{id:"2-5",a:2,t:"Kommunikationspolitik und Mediaplanung",b:`
+<h4>Instrumente</h4>
+<ul><li><b>Werbung (klassisch/digital)</b>: Print, TV, Radio, Außenwerbung, Online-Anzeigen</li>
+<li><b>Verkaufsförderung</b>: kurzfristige Anreize (Gewinnspiel, Gutschein, Probe)</li>
+<li><b>Public Relations</b>: Beziehung zur Öffentlichkeit, Presse, Image; nicht direkt verkaufsorientiert</li>
+<li><b>Sponsoring</b>: Geld/Leistung gegen Imagetransfer (Sport, Kultur, Soziales)</li>
+<li><b>Direktmarketing</b>: persönliche Ansprache (Mailing, Newsletter)</li>
+<li><b>Social Media, Content- und Influencer-Marketing</b></li>
+<li><b>Messen und Events</b></li></ul>
+<h4>AIDA-Modell</h4>
+<p><b>A</b>ttention (Aufmerksamkeit) → <b>I</b>nterest (Interesse) → <b>D</b>esire (Wunsch) → <b>A</b>ction (Handlung).</p>
+<h4>Planungsschritte</h4>
+<p>Situationsanalyse → Kommunikationsziele → Zielgruppe → Botschaft (Copy-Strategie: Nutzenversprechen, Begründung, Tonalität) → Budget → Medien (Mediaplanung) → Umsetzung → Erfolgskontrolle.</p>
+<h4>Briefing</h4>
+<p>Auftrag an eine Agentur: Ausgangslage, Ziele, Zielgruppe, Positionierung, Budget, Timing, Pflichtbestandteile. Antwort der Agentur: <b>Rebriefing</b>.</p>
+<h4>Mediaplanung</h4>
+<ul><li><b>Reichweite:</b> Anzahl/Anteil der Personen, die mindestens einmal Kontakt hatten.</li>
+<li><b>Kontakte / OTS:</b> durchschnittliche Kontakthäufigkeit.</li>
+<li><b>GRP</b> (Gross Rating Points) = Reichweite in % × Durchschnittskontakte.</li>
+<li><b>TKP</b> = Kosten ÷ Kontakte × 1.000 (Kosten für 1.000 Kontakte).</li></ul>
+<h4>Werbeerfolgskontrolle</h4>
+<p><b>Ökonomisch</b> (Umsatz, Absatz, ROAS) und <b>außerökonomisch</b> (Bekanntheit, Erinnerung: Recall/Recognition-Test, Image).</p>`,
+trap:"PR ist nicht dasselbe wie Werbung: PR zielt auf Image und Vertrauen und wird nicht als bezahlte Anzeige geschaltet."},
+{id:"2-6",a:2,t:"Online-Marketing und Customer Journey",b:`
+<ul><li><b>SEO</b> (Search Engine Optimization): organische Platzierung in Suchmaschinen verbessern (Inhalte, Technik, Backlinks). Langfristig, keine Klickkosten.</li>
+<li><b>SEA</b> (Search Engine Advertising): bezahlte Suchanzeigen, Abrechnung meist pro Klick (CPC). Sofort sichtbar.</li>
+<li><b>Social-Media-Marketing:</b> organisch (Posts) und bezahlt (Ads).</li>
+<li><b>E-Mail-Marketing:</b> Newsletter, nur mit Einwilligung (Double-Opt-in).</li>
+<li><b>Affiliate-Marketing:</b> Partner erhalten Provision für vermittelte Verkäufe.</li>
+<li><b>Influencer-Marketing:</b> Reichweite und Glaubwürdigkeit von Personen nutzen; Kennzeichnung als Werbung Pflicht.</li></ul>
+<h4>Customer Journey</h4>
+<p>Weg des Kunden über alle Kontaktpunkte (Touchpoints): Bewusstsein → Überlegung → Kauf → Nutzung → Bindung → Weiterempfehlung.</p>
+<h4>Funnel-Kennzahlen</h4>
+<p>Impressionen → Klicks (CTR) → Käufe (Conversion Rate). Siehe Rechentrainer.</p>
+<p><b>Paid, Owned, Earned Media:</b> bezahlt (Anzeigen), eigen (Website, Kanäle), verdient (Empfehlungen, Shares, Presse).</p>`},
+{id:"2-7",a:2,t:"Projektmanagement und Netzplan",b:`
+<p>Ein <b>Projekt</b> ist einmalig, zeitlich begrenzt, komplex und hat ein klares Ziel und eigene Ressourcen.</p>
+<p><b>Magisches Dreieck:</b> Zeit, Kosten, Leistung/Qualität. Verändert sich eine Größe, wirkt das auf die anderen.</p>
+<h4>Phasen</h4><p>Initiierung (Projektauftrag) → Planung → Durchführung → Kontrolle/Steuerung → Abschluss (Abschlussbericht, Lessons Learned).</p>
+<h4>Planungswerkzeuge</h4>
+<ul><li><b>Projektstrukturplan (PSP):</b> zerlegt das Projekt in Teilaufgaben und Arbeitspakete.</li>
+<li><b>Gantt-Diagramm / Balkendiagramm:</b> zeigt Dauer und Lage der Vorgänge im Kalender.</li>
+<li><b>Netzplan:</b> zeigt Abhängigkeiten, Puffer und den kritischen Pfad.</li>
+<li><b>Meilensteine:</b> wichtige Zwischenergebnisse mit Termin.</li>
+<li><b>Stakeholder-Analyse:</b> wer ist betroffen, welchen Einfluss, welche Interessen?</li></ul>
+<h4>Netzplan rechnen</h4>
+<div class="formula">Vorwärts: FEZ = FAZ + Dauer · FAZ = größter FEZ der Vorgänger<br>Rückwärts: SAZ = SEZ − Dauer · SEZ = kleinster SAZ der Nachfolger<br>Gesamtpuffer GP = SAZ − FAZ · Freier Puffer FP = kleinster FAZ der Nachfolger − FEZ</div>
+<p>Beispiel Workshop-Planung (Dauer in Tagen):</p>
+<div class="tbl"><table><tr><th>Vorgang</th><th>Vorgänger</th><th class="num">Dauer</th><th class="num">FAZ</th><th class="num">FEZ</th><th class="num">SAZ</th><th class="num">SEZ</th><th class="num">GP</th></tr>
+<tr><td>A Konzept</td><td>–</td><td class="num">3</td><td class="num">0</td><td class="num">3</td><td class="num">0</td><td class="num">3</td><td class="num">0</td></tr>
+<tr><td>B Dozent anfragen</td><td>A</td><td class="num">2</td><td class="num">3</td><td class="num">5</td><td class="num">3</td><td class="num">5</td><td class="num">0</td></tr>
+<tr><td>C Location buchen</td><td>A</td><td class="num">4</td><td class="num">3</td><td class="num">7</td><td class="num">6</td><td class="num">10</td><td class="num">3</td></tr>
+<tr><td>D Werbung</td><td>B</td><td class="num">5</td><td class="num">5</td><td class="num">10</td><td class="num">5</td><td class="num">10</td><td class="num">0</td></tr>
+<tr><td>E Anmeldephase</td><td>C, D</td><td class="num">3</td><td class="num">10</td><td class="num">13</td><td class="num">10</td><td class="num">13</td><td class="num">0</td></tr></table></div>
+<p><b>Kritischer Pfad:</b> A → B → D → E (alle Puffer 0), Projektdauer 13 Tage. Verzögert sich C um bis zu 3 Tage, bleibt das Ende gleich.</p>`,
+trap:"Der kritische Pfad ist nicht der Weg mit den meisten Vorgängen, sondern der ohne Puffer. Jede Verzögerung dort verschiebt das Projektende.",
+exam:"Netzpläne kommen gern als Rechenaufgabe. Tabelle wie oben anlegen, erst vorwärts (FAZ/FEZ), dann rückwärts (SAZ/SEZ), dann Puffer."},
+{id:"2-8",a:2,t:"Rechtliche Rahmenbedingungen im Marketing",b:`
+<h4>UWG (Gesetz gegen den unlauteren Wettbewerb)</h4>
+<ul><li><b>Irreführende Werbung</b> ist verboten (falsche Angaben zu Preis, Eigenschaften, Herkunft).</li>
+<li><b>Vergleichende Werbung</b> ist erlaubt, wenn sie objektiv, nachprüfbar und nicht herabsetzend ist.</li>
+<li><b>Unzumutbare Belästigung (§ 7 UWG):</b> Werbe-E-Mails grundsätzlich nur mit vorheriger ausdrücklicher Einwilligung. Ausnahme für Bestandskunden bei ähnlichen Produkten unter engen Voraussetzungen (Widerspruchsmöglichkeit).</li>
+<li><b>Schleichwerbung:</b> Werbung muss als solche erkennbar sein (z. B. „Anzeige“/„Werbung“ bei Influencern).</li></ul>
+<h4>Datenschutz (DSGVO)</h4>
+<p>Personenbezogene Daten nur mit Rechtsgrundlage (z. B. Einwilligung, Vertrag, berechtigtes Interesse). Grundsätze: Zweckbindung, Datenminimierung, Transparenz. Betroffene haben Recht auf Auskunft, Berichtigung, Löschung. <b>Double-Opt-in</b> für Newsletter als Nachweis der Einwilligung.</p>
+<h4>Weitere Rechtsgebiete</h4>
+<ul><li><b>Markenrecht (MarkenG):</b> Schutz eingetragener Marken, keine Verwechslungsgefahr erzeugen.</li>
+<li><b>Urheberrecht (UrhG):</b> Fotos, Texte, Musik sind geschützt; Nutzung nur mit Lizenz.</li>
+<li><b>Recht am eigenen Bild (KUG § 22):</b> Bildnisse dürfen grundsätzlich nur mit Einwilligung veröffentlicht werden.</li>
+<li><b>Preisangabenverordnung:</b> Endpreise inklusive Umsatzsteuer gegenüber Verbrauchern.</li>
+<li><b>Impressumspflicht</b> für geschäftliche Websites und Social-Media-Profile.</li></ul>`}
+,
+/* ---------- Bereich 3 ---------- */
+{id:"3-1",a:3,t:"Marketingcontrolling: strategisch und operativ",b:`
+<p>Controlling heißt <b>planen, steuern und kontrollieren</b>, nicht nur kontrollieren.</p>
+<table><tr><th></th><th>Strategisches Controlling</th><th>Operatives Controlling</th></tr>
+<tr><td>Frage</td><td>Tun wir die richtigen Dinge? (Effektivität)</td><td>Tun wir die Dinge richtig? (Effizienz)</td></tr>
+<tr><td>Zeit</td><td>langfristig (3–5 Jahre)</td><td>kurzfristig (Jahr, Quartal, Monat)</td></tr>
+<tr><td>Instrumente</td><td>SWOT, Portfolio, Lebenszyklus, Benchmarking, Balanced Scorecard</td><td>Kennzahlen, Soll-Ist-Vergleich, DB-Rechnung, ABC-Analyse, Budgetkontrolle</td></tr></table>
+<h4>Soll-Ist-Vergleich und Abweichungsanalyse</h4>
+<p>1. Soll-Werte planen → 2. Ist-Werte erfassen → 3. Abweichung berechnen (absolut und in %) → 4. Ursachen analysieren → 5. Gegenmaßnahmen einleiten.</p>
+<div class="formula">Abweichung % = (Ist − Soll) ÷ Soll × 100</div>
+<p><b>Frühwarnindikatoren:</b> Anfragen, Buchungsstand, Website-Besuche, Stornoquote zeigen Probleme, bevor der Umsatz sinkt.</p>`,
+exam:"In Klausur 2 sind Controlling-Aufgaben mit rund 30 Punkten gewichtet. Rechnen sicher üben (Tab „Rechnen“) und Ergebnisse immer interpretieren: Was bedeutet die Zahl für das Unternehmen?"},
+{id:"3-2",a:3,t:"Kosten, Deckungsbeitrag und Break-even",b:`
+<ul><li><b>Fixe Kosten:</b> fallen unabhängig von der Menge an (Miete, Gehälter, Versicherung).</li>
+<li><b>Variable Kosten:</b> steigen mit der Menge (Material, Provision, Druckkosten je Abzug).</li></ul>
+<div class="formula">Deckungsbeitrag je Stück (db) = Preis − variable Stückkosten<br>Deckungsbeitrag gesamt (DB) = Umsatz − variable Kosten gesamt<br>Gewinn = DB − Fixkosten<br>DB-Quote = DB ÷ Umsatz × 100<br>Break-even-Menge = Fixkosten ÷ db</div>
+<p>Der <b>Deckungsbeitrag</b> zeigt, wie viel ein Produkt zur Deckung der Fixkosten beiträgt. Solange db positiv ist, lohnt sich ein Zusatzauftrag kurzfristig (<b>Preisuntergrenze kurzfristig = variable Kosten</b>).</p>
+<p><b>Break-even-Punkt:</b> Umsatz deckt alle Kosten, Gewinn = 0. Ab hier macht man Gewinn.</p>
+<h4>Mehrstufige Deckungsbeitragsrechnung</h4><p>DB I (Produkt) → minus Produktfixkosten = DB II → minus Bereichsfixkosten = DB III → minus Unternehmensfixkosten = Betriebsergebnis. Zeigt, welches Produkt oder welcher Bereich sich wirklich lohnt.</p>`},
+{id:"3-3",a:3,t:"Marketing-Kennzahlen",b:`
+<div class="tbl"><table><tr><th>Kennzahl</th><th>Formel</th><th>Aussage</th></tr>
+<tr><td>TKP</td><td>Kosten ÷ Kontakte × 1.000</td><td>Kosten je 1.000 Kontakte; Vergleich von Medien</td></tr>
+<tr><td>CTR</td><td>Klicks ÷ Impressionen × 100</td><td>Wie viele klicken auf die Anzeige?</td></tr>
+<tr><td>CPC</td><td>Kosten ÷ Klicks</td><td>Kosten je Klick</td></tr>
+<tr><td>Conversion Rate</td><td>Käufe ÷ Klicks (Besucher) × 100</td><td>Wie viele Besucher kaufen?</td></tr>
+<tr><td>CPO / CPA</td><td>Kosten ÷ Bestellungen</td><td>Werbekosten je Bestellung</td></tr>
+<tr><td>ROAS</td><td>Umsatz ÷ Werbekosten</td><td>Umsatz je 1 € Werbung</td></tr>
+<tr><td>Werbe-ROI</td><td>(DB aus Kampagne − Kosten) ÷ Kosten × 100</td><td>Rendite der Kampagne</td></tr>
+<tr><td>Kundenzufriedenheit / NPS</td><td>% Promotoren − % Kritiker</td><td>Weiterempfehlungsbereitschaft</td></tr>
+<tr><td>Kundenwert (CLV)</td><td>DB je Jahr × Dauer der Kundenbeziehung</td><td>Wie viel ist ein Kunde wert?</td></tr>
+<tr><td>CAC</td><td>Marketing- und Vertriebskosten ÷ Neukunden</td><td>Kosten je Neukunde</td></tr>
+<tr><td>Wiederkaufrate</td><td>Wiederkäufer ÷ alle Kunden × 100</td><td>Kundenbindung</td></tr></table></div>
+<p>Kennzahlen sind nur im <b>Vergleich</b> aussagekräftig: mit Vorperiode (Zeitvergleich), mit Plan (Soll-Ist), mit anderen (Benchmark).</p>`,
+trap:"Ein hoher ROAS heißt nicht automatisch Gewinn. Erst der Deckungsbeitrag minus Werbekosten zeigt, ob eine Kampagne wirtschaftlich war."},
+{id:"3-4",a:3,t:"ABC-Analyse und Budgetierung",b:`
+<h4>ABC-Analyse</h4>
+<p>Kunden oder Produkte werden nach ihrem Umsatzanteil sortiert und in Klassen eingeteilt:</p>
+<ul><li><b>A:</b> ca. 20 % der Kunden, ca. 70–80 % des Umsatzes → intensiv betreuen</li><li><b>B:</b> mittlerer Anteil</li><li><b>C:</b> viele Kunden, wenig Umsatz → standardisiert betreuen</li></ul>
+<p>Vorgehen: Umsatz je Kunde → absteigend sortieren → Anteile und kumulierte Anteile berechnen → Grenzen ziehen.</p>
+<h4>Methoden der Budgetfestlegung</h4>
+<ul><li><b>Prozent vom Umsatz:</b> einfach, aber verkehrt herum (weniger Umsatz → weniger Werbung, obwohl man gerade mehr bräuchte).</li>
+<li><b>Finanzkraftmethode (All-you-can-afford):</b> was übrig bleibt.</li>
+<li><b>Wettbewerbsparität:</b> so viel wie die Konkurrenz.</li>
+<li><b>Ziel-Aufgaben-Methode:</b> Ziele festlegen, nötige Maßnahmen planen, deren Kosten ergeben das Budget. Theoretisch die beste Methode.</li></ul>`},
+{id:"3-5",a:3,t:"Qualitätsmanagement",b:`
+<ul><li><b>PDCA-Zyklus (Deming):</b> Plan → Do → Check → Act; wiederholt sich ständig.</li>
+<li><b>KVP</b> (kontinuierlicher Verbesserungsprozess, japanisch Kaizen): viele kleine Verbesserungen durch alle Mitarbeitenden.</li>
+<li><b>TQM</b> (Total Quality Management): Qualität als Aufgabe des ganzen Unternehmens, Kundenorientierung im Mittelpunkt.</li>
+<li><b>DIN EN ISO 9001:</b> Norm für Qualitätsmanagementsysteme; Zertifizierung durch externe Stelle.</li>
+<li><b>Benchmarking:</b> Vergleich der eigenen Prozesse mit den Besten (auch branchenfremd), um zu lernen.</li></ul>
+<h4>Beschwerdemanagement</h4>
+<p>Beschwerden sind kostenlose Hinweise auf Schwachstellen. Ablauf: Beschwerde annehmen → bearbeiten → reagieren (schnell, kulant) → auswerten → Ursachen beseitigen. Ziel: Kunden halten und Prozesse verbessern.</p>
+<h4>Qualität messen</h4>
+<p>Kundenzufriedenheitsbefragung, NPS, Reklamationsquote, Bearbeitungszeit, Mystery Shopping.</p>
+<h4>Ursachenanalyse</h4><p><b>Ishikawa-Diagramm</b> (Fischgräte): Ursachen nach Mensch, Maschine, Methode, Material, Milieu, Messung ordnen.</p>`}
+,
+/* ---------- Bereich 4 ---------- */
+{id:"4-1",a:4,t:"Kommunikationsmodelle",b:`
+<h4>Sender-Empfänger-Modell</h4><p>Sender codiert eine Nachricht, Empfänger decodiert sie. Störungen entstehen, wenn beide Codes nicht übereinstimmen.</p>
+<h4>Vier Seiten einer Nachricht (Schulz von Thun)</h4>
+<ul><li><b>Sachinhalt:</b> worüber ich informiere</li><li><b>Selbstkundgabe:</b> was ich von mir zeige</li><li><b>Beziehung:</b> was ich von dir halte / wie wir zueinander stehen</li><li><b>Appell:</b> wozu ich dich veranlassen möchte</li></ul>
+<p>Beispiel „Der Bericht ist ja immer noch nicht fertig.“ Sache: Der Bericht fehlt. Selbstkundgabe: Ich bin ungeduldig. Beziehung: Du bist unzuverlässig. Appell: Mach schneller!</p>
+<h4>Axiome nach Watzlawick (Auswahl)</h4>
+<ul><li>Man kann nicht nicht kommunizieren.</li><li>Jede Kommunikation hat einen Inhalts- und einen Beziehungsaspekt.</li></ul>
+<h4>Gesprächstechniken</h4>
+<ul><li><b>Aktives Zuhören:</b> nachfragen, paraphrasieren, Gefühle ansprechen.</li><li><b>Ich-Botschaften:</b> „Ich bin besorgt, weil …“ statt „Du hast schon wieder …“.</li><li><b>Offene Fragen</b> (W-Fragen) öffnen, <b>geschlossene</b> klären.</li><li><b>Feedback-Regeln:</b> konkret, zeitnah, beschreibend statt bewertend, Ich-Botschaft, veränderbares Verhalten.</li></ul>`},
+{id:"4-2",a:4,t:"Präsentation und Moderation",b:`
+<h4>Aufbau einer Präsentation</h4>
+<p>Einleitung (Begrüßung, Thema, Ziel, Ablauf) → Hauptteil (Problem, Analyse, Lösung) → Schluss (Zusammenfassung, Empfehlung, Ausblick).</p>
+<ul><li>Zielgruppe und Ziel vorher klären</li><li>Eine Kernaussage pro Folie, wenig Text, aussagekräftige Visualisierung</li><li>Medien bewusst wählen: Beamer, Flipchart, Pinnwand, Handout</li><li>Körpersprache: Blickkontakt, offene Haltung, ruhige Stimme, Pausen</li></ul>
+<h4>Moderation</h4><p>Moderator steuert den Prozess, nicht den Inhalt. Methoden: Kartenabfrage, Clustern, Punktabfrage (Gewichtung), Maßnahmenplan (Wer? Was? Bis wann?).</p>`,
+exam:"In der mündlichen Prüfung hast du höchstens 10 Minuten Präsentation, danach bis zu 20 Minuten Fachgespräch. Das Fachgespräch zählt zwei Drittel der mündlichen Note."},
+{id:"4-3",a:4,t:"Konfliktmanagement",b:`
+<h4>Konfliktarten</h4><ul><li><b>Sachkonflikt</b> (unterschiedliche Meinungen zur Lösung)</li><li><b>Beziehungskonflikt</b> (Antipathie, fehlender Respekt)</li><li><b>Zielkonflikt</b>, <b>Verteilungskonflikt</b> (Budget, Ressourcen), <b>Rollenkonflikt</b></li></ul>
+<p>Oft steckt hinter einem Sachkonflikt ein Beziehungskonflikt (Eisbergmodell).</p>
+<h4>Eskalationsstufen nach Glasl</h4><p>9 Stufen in drei Ebenen: Win-win (1–3) → Win-lose (4–6) → Lose-lose (7–9). Je früher man eingreift, desto eher ist eine gemeinsame Lösung möglich.</p>
+<h4>Ablauf eines Konfliktgesprächs</h4>
+<ol><li><b>Vorbereitung:</b> Fakten sammeln, Ziel festlegen, ruhigen Ort und Zeit wählen.</li><li><b>Eröffnung:</b> Anlass nennen, Gesprächsregeln, positive Atmosphäre.</li><li><b>Klärung:</b> beide Sichtweisen schildern lassen, aktiv zuhören, Interessen herausarbeiten.</li><li><b>Lösungssuche:</b> Vorschläge sammeln und bewerten.</li><li><b>Vereinbarung:</b> konkrete Maßnahmen schriftlich festhalten.</li><li><b>Nachbereitung:</b> Folgetermin, Umsetzung prüfen.</li></ol>
+<h4>Harvard-Konzept (sachgerechtes Verhandeln)</h4>
+<ol><li>Menschen und Probleme getrennt behandeln</li><li>Auf Interessen konzentrieren, nicht auf Positionen</li><li>Optionen zum beiderseitigen Vorteil entwickeln</li><li>Objektive Beurteilungskriterien verwenden</li></ol>`},
+{id:"4-4",a:4,t:"Führungsstile und Motivation",b:`
+<h4>Klassische Führungsstile (Lewin)</h4>
+<ul><li><b>Autoritär:</b> Führungskraft entscheidet allein. Schnell, aber wenig Motivation.</li><li><b>Kooperativ:</b> Mitarbeitende werden beteiligt. Motivierend, aber zeitaufwendiger.</li><li><b>Laissez-faire:</b> kaum Führung. Gut nur bei sehr selbstständigen Teams.</li></ul>
+<h4>Situatives Führen (Hersey/Blanchard)</h4>
+<div class="tbl"><table><tr><th>Reifegrad</th><th>Mitarbeiter ist …</th><th>Passender Stil</th></tr>
+<tr><td>R1</td><td>nicht fähig und nicht willig/unsicher</td><td>S1 Unterweisen (telling): genaue Anweisungen, enge Kontrolle</td></tr>
+<tr><td>R2</td><td>nicht fähig, aber willig/motiviert</td><td>S2 Überzeugen (selling): erklären, begründen, viel Unterstützung</td></tr>
+<tr><td>R3</td><td>fähig, aber nicht willig/unsicher</td><td>S3 Beteiligen (participating): gemeinsam entscheiden, ermutigen</td></tr>
+<tr><td>R4</td><td>fähig und willig</td><td>S4 Delegieren (delegating): Verantwortung übertragen</td></tr></table></div>
+<h4>Management-by-Konzepte</h4>
+<ul><li><b>by Objectives:</b> Führen durch Zielvereinbarung</li><li><b>by Exception:</b> Führungskraft greift nur bei Ausnahmen ein</li><li><b>by Delegation:</b> Aufgaben mit Kompetenz und Verantwortung übertragen</li></ul>
+<h4>Motivationstheorien</h4>
+<ul><li><b>Maslow:</b> Bedürfnispyramide: Grundbedürfnisse → Sicherheit → Soziales → Anerkennung → Selbstverwirklichung.</li>
+<li><b>Herzberg:</b> <b>Hygienefaktoren</b> (Gehalt, Arbeitsbedingungen, Sicherheit) verhindern Unzufriedenheit; <b>Motivatoren</b> (Anerkennung, Verantwortung, interessante Aufgaben, Aufstieg) erzeugen Zufriedenheit.</li></ul>`,
+trap:"Hoch motiviert, aber unerfahren ist R2, nicht R1. Der passende Stil ist S2: erklären und überzeugen, nicht nur anweisen.",
+exam:"Typisch: „Leiten Sie einen geeigneten Führungsstil ab.“ Reifegrad aus dem Fall bestimmen (Können und Wollen), Stil nennen, mit Fallangaben begründen."},
+{id:"4-5",a:4,t:"Personalauswahl und Personaleinsatz",b:`
+<h4>Personalbedarf</h4><p><b>Quantitativ</b> (wie viele?), <b>qualitativ</b> (welche Qualifikation?), <b>zeitlich und örtlich</b>.</p>
+<p>Nettopersonalbedarf = Bruttobedarf − vorhandenes Personal (± Zu- und Abgänge).</p>
+<h4>Grundlagen der Auswahl</h4>
+<ul><li><b>Stellenbeschreibung:</b> Aufgaben, Kompetenzen, Verantwortung, Einordnung.</li><li><b>Anforderungsprofil:</b> fachliche, methodische, soziale und persönliche Kompetenzen; Muss- und Kann-Kriterien.</li></ul>
+<h4>Beschaffungswege</h4><p><b>Intern</b> (Versetzung, Beförderung: günstig, motivierend, kennt Firma) und <b>extern</b> (Stellenanzeige, Jobbörse, Personalberater, Social Media: neue Impulse, größere Auswahl).</p>
+<h4>Auswahlinstrumente</h4><p>Bewerbungsunterlagen, strukturiertes Interview, Arbeitsprobe, Assessment Center, Probezeit.</p>
+<h4>AGG</h4><p>Das Allgemeine Gleichbehandlungsgesetz verbietet Benachteiligung wegen ethnischer Herkunft, Geschlecht, Religion/Weltanschauung, Behinderung, Alter und sexueller Identität. Stellenanzeigen neutral formulieren (m/w/d).</p>
+<h4>Personaleinsatz</h4><p>Richtige Person, richtige Aufgabe, richtige Zeit. Instrumente: Schicht- und Urlaubsplanung, Vertretungsregeln, Berücksichtigung von Qualifikation und Arbeitszeitgesetz.</p>`},
+{id:"4-6",a:4,t:"Berufsausbildung",b:`
+<p>Rechtsgrundlage ist das <b>Berufsbildungsgesetz (BBiG)</b>. Ausbilden darf, wer <b>persönlich und fachlich geeignet</b> ist; die berufs- und arbeitspädagogische Eignung wird nach der <b>AEVO</b> nachgewiesen. Wer den Fachwirt besteht, ist vom schriftlichen Teil der AEVO-Prüfung befreit.</p>
+<h4>Duales System</h4><p>Lernorte Betrieb und Berufsschule; Grundlage im Betrieb ist der Ausbildungsrahmenplan, daraus wird der betriebliche Ausbildungsplan.</p>
+<h4>Pflichten des Ausbildenden (Auswahl)</h4><ul><li>Ausbildungsziel vermitteln, Ausbildungsmittel kostenlos stellen</li><li>Zum Berufsschulbesuch freistellen und anhalten</li><li>Angemessene Vergütung zahlen</li><li>Nur Aufgaben übertragen, die dem Ausbildungszweck dienen</li></ul>
+<h4>Pflichten des Auszubildenden</h4><ul><li>Lernpflicht, Weisungen befolgen, Ausbildungsnachweis führen, Berufsschule besuchen, Betriebsgeheimnisse wahren</li></ul>
+<h4>Vier-Stufen-Methode</h4><ol><li>Vorbereiten (Lernende einstimmen)</li><li>Vormachen und erklären</li><li>Nachmachen und erklären lassen</li><li>Üben (selbstständig)</li></ol>
+<p>Probezeit: 1 bis 4 Monate. Ausbildungsvertrag schriftlich, Eintragung bei der IHK.</p>`},
+{id:"4-7",a:4,t:"Personalentwicklung und Arbeitsschutz",b:`
+<h4>Personalentwicklung</h4>
+<ul><li><b>Mitarbeitergespräch / Jahresgespräch:</b> Rückblick, Feedback, Zielvereinbarung, Entwicklungswünsche.</li>
+<li><b>Maßnahmen</b> „into the job“ (Einarbeitung), „on the job“ (Job Rotation, Job Enlargement = mehr gleichartige Aufgaben, Job Enrichment = mehr Verantwortung), „near the job“ (Qualitätszirkel), „off the job“ (Seminare, Weiterbildung).</li>
+<li><b>Erfolgskontrolle</b> der Weiterbildung: Zufriedenheit, Lernerfolg, Transfer in die Praxis, wirtschaftlicher Nutzen.</li></ul>
+<h4>Arbeits- und Gesundheitsschutz</h4>
+<ul><li><b>Arbeitsschutzgesetz (ArbSchG):</b> Arbeitgeber muss eine <b>Gefährdungsbeurteilung</b> durchführen und Maßnahmen ableiten; Mitarbeitende unterweisen.</li>
+<li><b>Arbeitszeitgesetz:</b> werktäglich grundsätzlich höchstens 8 Stunden, bis 10 möglich bei Ausgleich; Ruhezeit 11 Stunden.</li>
+<li><b>Jugendarbeitsschutzgesetz</b> für Auszubildende unter 18.</li>
+<li><b>Betriebliches Gesundheitsmanagement:</b> Ergonomie, Stressprävention, Bewegungsangebote.</li>
+<li>Rangfolge der Schutzmaßnahmen: <b>STOP</b> = Substitution, Technisch, Organisatorisch, Persönlich.</li></ul>`}
+];
+
+const EX = {"1-1": "E-Bike-Markt einer Großstadt: 200.000 Haushalte könnten ein E-Bike kaufen (Potenzial). Verkauft werden im Jahr 12.000 Stück für 36 Mio. € (Volumen). Ein Händler mit 2,7 Mio. € Umsatz hat 7,5 % Marktanteil. Hat der größte Konkurrent 15 %, liegt sein relativer Marktanteil bei 0,5.", "1-2": "Eine Brauerei plant ein alkoholfreies Craft-Bier. Zuerst wertet sie Branchenstatistiken aus (sekundär). Dann führt sie Gruppendiskussionen mit 8 Biertrinkern (primär, qualitativ). Zum Schluss testet sie zwei Etiketten per Online-Umfrage mit 1.500 Personen (primär, quantitativ).", "1-3": "Ein Streamingdienst: Die Serien-Flatrate ist die Cash Cow, das neue Spiele-Angebot ein Question Mark. Substitute sind Kino, Kurzvideos auf Social Media und Gaming. Chance (extern): Menschen schauen immer mehr auf dem Smartphone. Risiko (extern): neue Anbieter mit werbefinanziertem Gratis-Modell.", "1-4": "Ein Fitnessstudio: Segment A sind Studierende von 18 bis 25, preissensibel, trainieren abends, über Instagram erreichbar. Segment B sind Berufstätige von 40 bis 60, gesundheitsorientiert, wünschen Betreuung, über Ärzte und Lokalpresse erreichbar. Beide brauchen andere Tarife, Kanäle und Botschaften.", "1-6": "Aldi verfolgt Kostenführerschaft, Miele Differenzierung (Qualität, Langlebigkeit), ein Fachgeschäft nur für Linkshänder-Produkte eine Nischenstrategie. Ein Kaffeeröster, der seinen Kunden zusätzlich Kaffeemaschinen verkauft, betreibt nach Ansoff Produktentwicklung.", "1-7": "Ein Möbelhändler will künftig vor allem online verkaufen. Die Filialmitarbeitenden fürchten um ihre Jobs. Gegenmaßnahmen: früh und offen informieren, Video-Beratung als neue Aufgabe anbieten, Schulungen durchführen, erste Erfolge sichtbar machen.", "2-1": "Ein Hotel: People ist das freundliche Personal an der Rezeption, Process der schnelle Check-in per App, Physical Evidence sind Lobby, Zimmer und Website-Fotos. Weil man eine Dienstleistung vor dem Kauf nicht prüfen kann, wirken diese Signale besonders stark.", "2-2": "Haribo bringt neben den Goldbären eine zuckerreduzierte Sorte heraus: Produktdifferenzierung. Würde das Goldbären-Rezept geändert und das alte ersetzt, wäre es Produktvariation. Dr. Oetker nutzt eine Dachmarke, Ferrero Einzelmarken.", "2-3": "Kinos sind montags günstiger (zeitlich), Studierende zahlen weniger (personell), Großpackungen sind pro Stück billiger (mengenmäßig). Spielkonsolen starten oft mit Skimming, neue Streamingdienste oft mit Penetrationspreisen.", "2-4": "Ein Hersteller von Outdoor-Jacken verkauft im eigenen Online-Shop (direkt), über ausgewählte Sportfachhändler (indirekt, selektiv) und über Amazon (indirekt). Ein Handelsvertreter, der auf Provision Fachhändler besucht, ist ein Absatzhelfer.", "2-5": "Ein Getränkehersteller: TV-Spot (Werbung), Gratisproben im Supermarkt (Verkaufsförderung), Pressemitteilung zur neuen Recyclingflasche (PR), Trikotwerbung beim Fußballverein (Sponsoring), Gewinnspiel auf Instagram (Verkaufsförderung über Social Media).", "2-6": "Ein Online-Shop für Tierbedarf: Google-Anzeige bei der Suche „Hundefutter getreidefrei“ (SEA), Ratgeber-Artikel, der organisch gut rankt (SEO), Newsletter mit Rabattcode an angemeldete Kunden (E-Mail), Kooperation mit einer Hunde-Influencerin, gekennzeichnet als Werbung.", "2-8": "Ein Shop wirbt mit „Testsieger“, obwohl der Test fünf Jahre alt ist und neuere Tests anders ausfielen: irreführende Werbung nach UWG. Wer Fotos von Kundinnen und Kunden in der Werbung zeigt, braucht deren Einwilligung.", "3-1": "Ein Modehändler plant im Oktober 80.000 € Umsatz und erreicht 68.000 €: Abweichung −15 %. Ursache laut Analyse: warmes Wetter, Wintermäntel verkaufen sich nicht. Maßnahme: Aktion für Übergangsjacken, Nachbestellung der Wintermäntel reduzieren.", "3-2": "Eine Bäckerei verkauft ein Brot für 4,50 €, variable Kosten (Zutaten, Energie) 1,50 € → db = 3,00 €. Fixkosten 18.000 € im Monat → Break-even bei 18.000 ÷ 3 = 6.000 Broten im Monat.", "3-3": "Ein Online-Shop zahlt 5.000 € für Anzeigen, bekommt 10.000 Klicks und 200 Bestellungen zu je 75 €: CPC 0,50 €, Conversion Rate 2 %, CPO 25 €, Umsatz 15.000 €, ROAS 3. Bei 40 % DB-Quote bleiben 6.000 € − 5.000 € = 1.000 € Ergebnis.", "3-4": "Ein Großhändler hat 500 Kunden. Die 80 größten bringen 72 % des Umsatzes (A-Kunden) und bekommen einen festen Key-Account-Manager. Die 300 kleinsten (C-Kunden) bestellen standardisiert über den Online-Shop.", "3-5": "Eine Autowerkstatt fragt nach jeder Reparatur per SMS die Zufriedenheit ab. Häufigste Beschwerde: Das Auto ist nicht zur zugesagten Zeit fertig. Maßnahme: realistischere Zeitplanung und Info-SMS bei Verzögerung. Danach wird erneut gemessen: ein vollständiger PDCA-Zyklus.", "4-1": "Eine Führungskraft sagt: „Die Präsentation ist ja immer noch nicht fertig.“ Die Mitarbeiterin hört vor allem den Beziehungsaspekt („Du traust mir nichts zu“) und reagiert gekränkt, obwohl die Chefin eigentlich nur den Termin klären wollte (Sachinhalt).", "4-4": "Ein erfahrener, engagierter Vertriebsmitarbeiter (R4) bekommt ein neues Kundengebiet übertragen (S4 Delegieren). Eine unsichere Auszubildende im ersten Jahr (R1) bekommt klare Anweisungen und enge Begleitung (S1 Unterweisen).", "4-5": "Eine Agentur sucht eine Social-Media-Managerin. Muss-Kriterien: Erfahrung mit bezahlter Social-Media-Werbung, sichere Texte. Kann-Kriterien: Videoschnitt, Englisch. Auswahl über Unterlagen, strukturiertes Interview und eine Arbeitsprobe (Redaktionsplan für einen Testkunden).", "4-6": "Ein Azubi soll lernen, eine Pressemitteilung zu schreiben. Vorbereiten: Ziel erklären, Interesse wecken. Vormachen: Die Ausbilderin schreibt eine und erklärt den Aufbau. Nachmachen: Der Azubi schreibt eine eigene und begründet seine Entscheidungen. Üben: weitere Mitteilungen selbstständig.", "4-7": "Im Marketingbüro: Belastung durch Bildschirmarbeit (Rücken, Augen), Stolperfallen durch Kabel, Stress durch Termindruck. Maßnahmen: höhenverstellbare Tische und Kabelkanäle (technisch), Pausen- und Prioritätenregeln (organisatorisch)."};
+
+const QUIZ = [
+/* Bereich 1 */
+{a:1,q:"Ein Unternehmen bietet sein bestehendes Produkt erstmals in Frankreich an. Welche Ansoff-Strategie ist das?",o:["Marktdurchdringung","Marktentwicklung","Produktentwicklung","Diversifikation"],r:1,e:"Bestehendes Produkt, neuer (räumlicher) Markt = Marktentwicklung."},
+{a:1,q:"Welche Methode ist qualitativ?",o:["Online-Fragebogen mit 1.000 Teilnehmern","Auswertung der Verkaufsstatistik","Tiefeninterview mit 8 Kunden","Haushaltspanel"],r:2,e:"Qualitative Forschung fragt nach dem Warum, mit wenigen Befragten und offenen Gesprächen."},
+{a:1,q:"Was bedeutet Reliabilität?",o:["Man misst das, was man messen will","Bei Wiederholung unter gleichen Bedingungen kommt dasselbe heraus","Das Ergebnis hängt nicht vom Forscher ab","Die Stichprobe ist groß genug"],r:1,e:"Reliabilität = Zuverlässigkeit. Validität = Gültigkeit, Objektivität = unabhängig vom Forscher."},
+{a:1,q:"Hohes Marktwachstum, niedriger relativer Marktanteil. Welches BCG-Feld?",o:["Star","Cash Cow","Question Mark","Poor Dog"],r:2,e:"Question Marks brauchen eine Entscheidung: investieren, um Star zu werden, oder aufgeben."},
+{a:1,q:"Welche Felder der SWOT-Analyse sind extern?",o:["Stärken und Schwächen","Chancen und Risiken","Stärken und Chancen","Schwächen und Risiken"],r:1,e:"Chancen und Risiken kommen aus der Umwelt; Stärken und Schwächen aus dem Unternehmen."},
+{a:1,q:"Ein Anbieter konzentriert sich mit einem Spezialangebot auf eine kleine Zielgruppe. Welche Porter-Strategie?",o:["Kostenführerschaft","Differenzierung im Gesamtmarkt","Nischenstrategie (Fokus)","Diversifikation"],r:2,e:"Fokus/Nische = Konzentration auf ein enges Marktsegment."},
+{a:1,q:"Welches Merkmal ist psychografisch?",o:["Alter","Wohnort","Lebensstil und Werte","Kaufhäufigkeit"],r:2,e:"Alter ist soziodemografisch, Wohnort geografisch, Kaufhäufigkeit verhaltensorientiert."},
+{a:1,q:"„Bekanntheit bis 30.06.2027 von 20 % auf 35 % steigern“ ist welche Zielart?",o:["Ökonomisches Ziel","Psychografisches Ziel","Instrumentalziel der Preispolitik","Kein Ziel, nur eine Maßnahme"],r:1,e:"Bekanntheit, Image, Zufriedenheit sind psychografische Ziele. Das Ziel ist zudem SMART formuliert."},
+{a:1,q:"Welche Markteintrittsform hat das geringste Kapitalrisiko?",o:["Eigene Tochtergesellschaft","Joint Venture","Indirekter Export","Direktinvestition in ein Werk"],r:2,e:"Beim indirekten Export übernimmt ein Exporteur im Inland das Auslandsgeschäft. Wenig Risiko, aber auch wenig Kontrolle."},
+{a:1,q:"In welcher Phase des Produktlebenszyklus ist der Gewinn typischerweise negativ?",o:["Einführung","Wachstum","Reife","Sättigung"],r:0,e:"Hohe Entwicklungs- und Werbekosten bei geringem Umsatz."},
+{a:1,q:"Welche Kraft gehört NICHT zu Porters Five Forces?",o:["Verhandlungsmacht der Kunden","Bedrohung durch Ersatzprodukte","Inflationsrate","Bedrohung durch neue Anbieter"],r:2,e:"Die Inflationsrate gehört zur PESTEL-Analyse (economic), nicht zu den Five Forces."},
+{a:1,q:"Ein Hersteller von Kameras kauft einen Fotofachhandel. Welche Diversifikation ist das?",o:["Horizontal","Vertikal","Lateral","Konzentrisch nach Ansoff"],r:1,e:"Vertikal = vor- oder nachgelagerte Wirtschaftsstufe (hier der Handel)."},
+/* Bereich 2 */
+{a:2,q:"Was kennzeichnet eine Skimming-Strategie?",o:["Niedriger Einstiegspreis, später erhöhen","Hoher Einführungspreis, später senken","Preis immer gleich der Konkurrenz","Preis nach Kosten plus Zuschlag"],r:1,e:"Skimming schöpft die hohe Zahlungsbereitschaft früher Käufer ab."},
+{a:2,q:"Ein Studentenrabatt ist welche Preisdifferenzierung?",o:["Zeitlich","Räumlich","Personell","Mengenmäßig"],r:2,e:"Unterschiedliche Preise je nach Personengruppe."},
+{a:2,q:"Exklusive Distribution bedeutet …",o:["möglichst viele Verkaufsstellen","ausgewählte Händler nach Qualitätskriterien","sehr wenige Händler, oft mit Gebietsschutz","Verkauf nur online"],r:2,e:"Typisch für Luxusgüter."},
+{a:2,q:"Wofür steht AIDA?",o:["Analyse, Idee, Design, Aktion","Attention, Interest, Desire, Action","Aufmerksamkeit, Image, Distribution, Absatz","Awareness, Intention, Decision, Advocacy"],r:1,e:"Stufenmodell der Werbewirkung."},
+{a:2,q:"Was misst der TKP?",o:["Kosten je Klick","Kosten für 1.000 Kontakte","Anteil der Käufer an den Besuchern","Umsatz je Werbe-Euro"],r:1,e:"Tausend-Kontakt-Preis: Kosten ÷ Kontakte × 1.000."},
+{a:2,q:"Was ist der kritische Pfad im Netzplan?",o:["Der Weg mit den meisten Vorgängen","Die Vorgänge ohne Puffer","Die teuersten Vorgänge","Alle Vorgänge mit Meilenstein"],r:1,e:"Verzögert sich ein Vorgang auf dem kritischen Pfad, verschiebt sich das Projektende."},
+{a:2,q:"Welche Größen bilden das magische Dreieck des Projektmanagements?",o:["Zeit, Kosten, Leistung/Qualität","Ziel, Team, Budget","Planung, Steuerung, Kontrolle","Risiko, Chance, Ressourcen"],r:0,e:"Ändert man eine Größe, wirkt das auf die anderen."},
+{a:2,q:"Darf man einen Werbe-Newsletter an Interessenten ohne Einwilligung schicken?",o:["Ja, wenn ein Abmeldelink enthalten ist","Ja, an Geschäftskunden immer","Nein, grundsätzlich nur mit vorheriger ausdrücklicher Einwilligung","Ja, wenn die Adresse öffentlich ist"],r:2,e:"§ 7 UWG: unzumutbare Belästigung. Nachweis über Double-Opt-in."},
+{a:2,q:"Alle Produkte laufen unter dem Unternehmensnamen. Welche Markenstrategie?",o:["Einzelmarke","Familienmarke","Dachmarke","Handelsmarke"],r:2,e:"Beispiele: Dr. Oetker, Siemens."},
+{a:2,q:"Was brauchst du, um ein Kundenporträt in einer Werbeanzeige zu zeigen?",o:["Nichts, du bist der Urheber","Die Einwilligung der abgebildeten Person","Nur eine Namensnennung","Eine Genehmigung der IHK"],r:1,e:"Recht am eigenen Bild (§ 22 KUG) und DSGVO."},
+{a:2,q:"Bezahlte Anzeigen in Suchmaschinen nennt man …",o:["SEO","SEA","Affiliate","Content-Marketing"],r:1,e:"SEA = Search Engine Advertising, meist Abrechnung pro Klick."},
+{a:2,q:"Welche zusätzlichen P gibt es im Dienstleistungsmarketing?",o:["People, Process, Physical Evidence","Price, Profit, Positioning","Partner, Plattform, Performance","Planning, Publicity, Product"],r:0,e:"Aus 4P werden 7P."},
+{a:2,q:"Ein Handelsvertreter vermittelt Verkäufe, ohne die Ware zu kaufen. Er ist …",o:["Absatzmittler","Absatzhelfer","Großhändler","Franchisenehmer"],r:1,e:"Absatzhelfer erwerben kein Eigentum an der Ware."},
+/* Bereich 3 */
+{a:3,q:"Wie berechnet man den Deckungsbeitrag?",o:["Umsatz − Fixkosten","Umsatz − variable Kosten","Umsatz − Gesamtkosten","Gewinn + Fixkosten − Umsatz"],r:1,e:"Der DB deckt zuerst die Fixkosten, der Rest ist Gewinn."},
+{a:3,q:"Was gilt am Break-even-Punkt?",o:["Der Umsatz ist am höchsten","Der Gewinn ist null, alle Kosten sind gedeckt","Die variablen Kosten sind null","Der Deckungsbeitrag ist null"],r:1,e:"Ab hier beginnt die Gewinnzone."},
+{a:3,q:"A-Kunden in der ABC-Analyse sind …",o:["viele Kunden mit wenig Umsatz","wenige Kunden mit großem Umsatzanteil","Neukunden","Kunden mit Zahlungsrückstand"],r:1,e:"Etwa 20 % der Kunden bringen 70–80 % des Umsatzes."},
+{a:3,q:"Wofür steht PDCA?",o:["Plan, Do, Check, Act","Prepare, Deliver, Control, Adjust","Plan, Decide, Communicate, Analyse","Process, Data, Customer, Action"],r:0,e:"Deming-Kreis für kontinuierliche Verbesserung."},
+{a:3,q:"Welche Budgetmethode gilt theoretisch als die beste?",o:["Prozent vom Umsatz","Wettbewerbsparität","Finanzkraftmethode","Ziel-Aufgaben-Methode"],r:3,e:"Das Budget wird aus Zielen und nötigen Maßnahmen abgeleitet."},
+{a:3,q:"Strategisches Controlling fragt vor allem …",o:["Tun wir die Dinge richtig?","Tun wir die richtigen Dinge?","Wie hoch ist der Monatsumsatz?","Wer ist schuld an der Abweichung?"],r:1,e:"Effektivität (strategisch) vs. Effizienz (operativ)."},
+{a:3,q:"Preiselastizität −2,5 bedeutet …",o:["Die Nachfrage ist unelastisch","Steigt der Preis um 1 %, sinkt die Menge um 2,5 %","Steigt der Preis um 2,5 %, sinkt die Menge um 1 %","Die Nachfrage steigt mit dem Preis"],r:1,e:"Betrag größer 1 = elastisch: Kunden reagieren stark auf den Preis."},
+{a:3,q:"Was ist Benchmarking?",o:["Interne Kostenkontrolle","Vergleich mit den Besten, um zu lernen","Festlegung des Werbebudgets","Messung der Markenbekanntheit"],r:1,e:"Vergleichspartner können auch aus anderen Branchen kommen."},
+{a:3,q:"Ein ROAS von 4 bedeutet …",o:["4 % Gewinn","Je 1 € Werbung 4 € Umsatz","4 € Kosten je Klick","4 Käufe je 100 Klicks"],r:1,e:"ROAS = Umsatz ÷ Werbekosten. Über Gewinn sagt er allein nichts aus."},
+{a:3,q:"Was ist die kurzfristige Preisuntergrenze?",o:["Selbstkosten","Variable Stückkosten","Fixkosten je Stück","Konkurrenzpreis"],r:1,e:"Solange der Preis die variablen Kosten deckt, liefert der Auftrag einen positiven Deckungsbeitrag."},
+{a:3,q:"Das Ishikawa-Diagramm dient zur …",o:["Terminplanung","Ursachenanalyse","Budgetierung","Zielgruppenauswahl"],r:1,e:"Fischgrätendiagramm: Ursachen nach Kategorien wie Mensch, Methode, Material."},
+/* Bereich 4 */
+{a:4,q:"Welche vier Seiten hat eine Nachricht nach Schulz von Thun?",o:["Sachinhalt, Selbstkundgabe, Beziehung, Appell","Sender, Empfänger, Kanal, Code","Inhalt, Form, Ton, Ziel","Fakten, Gefühle, Wünsche, Bitten"],r:0,e:"Kommunikationsquadrat bzw. Vier-Ohren-Modell."},
+{a:4,q:"Eine neue Mitarbeiterin ist hoch motiviert, aber unerfahren. Welcher Stil nach Hersey/Blanchard?",o:["S1 Unterweisen","S2 Überzeugen","S3 Beteiligen","S4 Delegieren"],r:1,e:"Reifegrad R2 (willig, nicht fähig) → erklären, begründen, unterstützen."},
+{a:4,q:"Welcher ist nach Herzberg ein Hygienefaktor?",o:["Anerkennung","Verantwortung","Gehalt","Interessante Arbeitsinhalte"],r:2,e:"Hygienefaktoren verhindern Unzufriedenheit, motivieren aber nicht dauerhaft."},
+{a:4,q:"Welche Aussage ist eine Ich-Botschaft?",o:["Du bist immer zu spät.","Ich ärgere mich, wenn Termine nicht eingehalten werden.","Man kommt nicht zu spät.","Warum schaffst du das nie?"],r:1,e:"Ich-Botschaften beschreiben die eigene Wirkung, ohne anzugreifen."},
+{a:4,q:"Was ist ein Grundsatz des Harvard-Konzepts?",o:["Auf Positionen beharren","Auf Interessen konzentrieren, nicht auf Positionen","Schnell Kompromisse machen","Emotionen ignorieren"],r:1,e:"Außerdem: Menschen und Probleme trennen, Optionen entwickeln, objektive Kriterien nutzen."},
+{a:4,q:"Was ist die richtige Reihenfolge der Vier-Stufen-Methode?",o:["Vormachen, Vorbereiten, Üben, Nachmachen","Vorbereiten, Vormachen, Nachmachen, Üben","Erklären, Prüfen, Üben, Bewerten","Üben, Vormachen, Nachmachen, Vorbereiten"],r:1,e:"Klassische Unterweisungsmethode in der Ausbildung."},
+{a:4,q:"Nach welchem Gesetz ist eine Gefährdungsbeurteilung Pflicht?",o:["BBiG","AGG","Arbeitsschutzgesetz","UWG"],r:2,e:"§ 5 ArbSchG verpflichtet den Arbeitgeber zur Gefährdungsbeurteilung."},
+{a:4,q:"„Management by Objectives“ heißt …",o:["Führen durch Ausnahmen","Führen durch Zielvereinbarung","Führen durch Delegation","Führen durch Kontrolle"],r:1,e:"Ziele werden gemeinsam vereinbart, der Weg bleibt offen."},
+{a:4,q:"Wie viele Eskalationsstufen hat das Modell nach Glasl?",o:["3","5","7","9"],r:3,e:"Neun Stufen in drei Ebenen: win-win, win-lose, lose-lose."},
+{a:4,q:"Was verbietet das AGG in einer Stellenanzeige?",o:["Gehaltsangaben","Benachteiligung z. B. wegen Alter oder Geschlecht","Anforderungen an Berufserfahrung","Einen Bewerbungsschluss"],r:1,e:"Anzeigen müssen diskriminierungsfrei formuliert sein."},
+{a:4,q:"Job Enrichment bedeutet …",o:["mehr gleichartige Aufgaben","mehr Verantwortung und Entscheidungsspielraum","regelmäßiger Arbeitsplatzwechsel","Gehaltserhöhung"],r:1,e:"Job Enlargement = mehr gleichartige Aufgaben; Job Rotation = Wechsel."},
+{a:4,q:"Welcher Satz ist ein Axiom von Watzlawick?",o:["Der Kunde ist König","Man kann nicht nicht kommunizieren","Jede Nachricht hat vier Seiten","Führung ist Vertrauen"],r:1,e:"Auch Schweigen sendet eine Botschaft."}
+];
+
+const CARDS = [
+[1,"Marktpotenzial","Maximal mögliche Absatzmenge eines Marktes, wenn alle möglichen Kunden kaufen würden."],
+[1,"Marktvolumen","Tatsächlich realisierter Absatz/Umsatz aller Anbieter in einem Zeitraum."],
+[1,"Relativer Marktanteil","Eigener Marktanteil ÷ Marktanteil des stärksten Konkurrenten. Über 1 = Marktführer."],
+[1,"Primärforschung","Daten werden für die eigene Frage neu erhoben. Passgenau, aber teuer."],
+[1,"Sekundärforschung","Auswertung vorhandener Daten. Günstig und schnell, aber nicht passgenau und evtl. veraltet."],
+[1,"Panel","Gleiche Personengruppe wird regelmäßig zum gleichen Thema befragt. Zeigt Entwicklungen."],
+[1,"Repräsentativität","Die Stichprobe bildet die Grundgesamtheit verkleinert ab."],
+[1,"Validität","Gültigkeit: Man misst wirklich das, was man messen will."],
+[1,"Reliabilität","Zuverlässigkeit: Bei Wiederholung kommt dasselbe Ergebnis heraus."],
+[1,"PESTEL","Umweltanalyse: politisch, ökonomisch, sozial, technologisch, ökologisch, rechtlich."],
+[1,"Cash Cow","BCG: hoher Marktanteil, geringes Wachstum. Bringt Geld, wird abgeschöpft."],
+[1,"Question Mark","BCG: hohes Wachstum, geringer Marktanteil. Investieren oder aufgeben."],
+[1,"SMART","Spezifisch, messbar, attraktiv, realistisch, terminiert."],
+[1,"Psychografisches Ziel","Ziel im Kopf des Kunden: Bekanntheit, Image, Zufriedenheit."],
+[1,"USP","Unique Selling Proposition: einzigartiges Nutzenversprechen gegenüber der Konkurrenz."],
+[1,"Marktdurchdringung","Ansoff: bestehendes Produkt, bestehender Markt. Geringstes Risiko."],
+[1,"Diversifikation","Ansoff: neues Produkt, neuer Markt. Höchstes Risiko. Horizontal, vertikal oder lateral."],
+[1,"Stuck in the middle","Porter: Unternehmen ohne klare Kosten- oder Differenzierungsstrategie."],
+[1,"Positionierungskreuz","Darstellung der Stellung von Marken auf zwei kaufrelevanten Achsen."],
+[2,"7P","Product, Price, Place, Promotion + People, Process, Physical Evidence."],
+[2,"Produktvariation","Bestehendes Produkt wird verändert und ersetzt das alte."],
+[2,"Produktdifferenzierung","Zusätzliche Varianten neben dem bestehenden Produkt."],
+[2,"Dachmarke","Alle Produkte unter dem Unternehmensnamen (z. B. Dr. Oetker)."],
+[2,"Skimming","Hoher Einführungspreis, wird später gesenkt."],
+[2,"Penetrationsstrategie","Niedriger Einführungspreis, um schnell Marktanteile zu gewinnen."],
+[2,"Preisdifferenzierung","Gleiche Leistung zu unterschiedlichen Preisen: zeitlich, räumlich, personell, mengenmäßig."],
+[2,"Selektive Distribution","Vertrieb über ausgewählte Händler nach Qualitätskriterien."],
+[2,"Absatzhelfer","Unterstützen den Vertrieb, ohne Eigentum an der Ware (z. B. Handelsvertreter)."],
+[2,"AIDA","Attention, Interest, Desire, Action."],
+[2,"Briefing / Rebriefing","Auftrag an die Agentur / deren Rückmeldung mit eigenem Verständnis."],
+[2,"GRP","Gross Rating Points = Reichweite in % × Durchschnittskontakte."],
+[2,"TKP","Kosten ÷ Kontakte × 1.000."],
+[2,"Double-Opt-in","Anmeldung zum Newsletter wird per Bestätigungsmail nachgewiesen."],
+[2,"§ 7 UWG","Unzumutbare Belästigung: Werbe-E-Mails nur mit ausdrücklicher Einwilligung."],
+[2,"Projektstrukturplan","Zerlegt ein Projekt in Teilaufgaben und Arbeitspakete."],
+[2,"Kritischer Pfad","Folge von Vorgängen ohne Puffer; bestimmt die Projektdauer."],
+[2,"Gesamtpuffer","SAZ − FAZ: so lange darf sich ein Vorgang verschieben, ohne das Projektende zu verschieben."],
+[2,"Paid, Owned, Earned Media","Bezahlte Werbung, eigene Kanäle, verdiente Reichweite (Empfehlungen, Presse)."],
+[3,"Deckungsbeitrag","Umsatz − variable Kosten. Dient zur Deckung der Fixkosten."],
+[3,"Break-even-Menge","Fixkosten ÷ Deckungsbeitrag je Stück."],
+[3,"Conversion Rate","Käufe ÷ Besucher (Klicks) × 100."],
+[3,"CTR","Klicks ÷ Impressionen × 100."],
+[3,"CPO","Werbekosten ÷ Bestellungen."],
+[3,"ROAS","Umsatz ÷ Werbekosten."],
+[3,"Customer Lifetime Value","Wert eines Kunden über die gesamte Kundenbeziehung."],
+[3,"NPS","Net Promoter Score = % Promotoren − % Kritiker."],
+[3,"ABC-Analyse","Einteilung von Kunden/Produkten nach Umsatzanteil in A, B und C."],
+[3,"Ziel-Aufgaben-Methode","Budget ergibt sich aus Zielen und den Kosten nötiger Maßnahmen."],
+[3,"PDCA","Plan, Do, Check, Act: Kreislauf der kontinuierlichen Verbesserung."],
+[3,"KVP / Kaizen","Ständige Verbesserung in kleinen Schritten durch alle Mitarbeitenden."],
+[3,"Benchmarking","Vergleich mit den Besten, um zu lernen."],
+[3,"Soll-Ist-Vergleich","Plan wird mit Ergebnis verglichen, Abweichungen werden analysiert."],
+[3,"Ishikawa-Diagramm","Fischgräten-Diagramm zur Ursachenanalyse."],
+[4,"Vier-Ohren-Modell","Sachinhalt, Selbstkundgabe, Beziehung, Appell (Schulz von Thun)."],
+[4,"Aktives Zuhören","Aufmerksam zuhören, paraphrasieren, nachfragen, Gefühle spiegeln."],
+[4,"Harvard-Konzept","Menschen und Probleme trennen, Interessen statt Positionen, Optionen, objektive Kriterien."],
+[4,"Reifegrad R2","Nicht fähig, aber willig → Führungsstil S2 Überzeugen."],
+[4,"Hygienefaktoren","Herzberg: Gehalt, Arbeitsbedingungen, Sicherheit. Verhindern Unzufriedenheit."],
+[4,"Motivatoren","Herzberg: Anerkennung, Verantwortung, Aufgaben, Aufstieg. Erzeugen Zufriedenheit."],
+[4,"Management by Objectives","Führen durch Zielvereinbarung."],
+[4,"Anforderungsprofil","Fachliche, methodische, soziale und persönliche Kompetenzen für eine Stelle."],
+[4,"AGG","Verbot von Benachteiligung wegen Herkunft, Geschlecht, Religion, Behinderung, Alter, sexueller Identität."],
+[4,"Vier-Stufen-Methode","Vorbereiten, Vormachen, Nachmachen, Üben."],
+[4,"AEVO","Ausbilder-Eignungsverordnung: Nachweis der berufs- und arbeitspädagogischen Eignung."],
+[4,"Job Enrichment","Mehr Verantwortung und Entscheidungsspielraum."],
+[4,"Gefährdungsbeurteilung","Pflicht nach § 5 ArbSchG: Gefahren ermitteln, Maßnahmen festlegen."],
+[4,"STOP-Prinzip","Rangfolge im Arbeitsschutz: Substitution, technisch, organisatorisch, persönlich."]
+];
+
+/* Rechentrainer */
+const rnd=(a,b,s=1)=>Math.round((Math.random()*(b-a)+a)/s)*s;
+const fmt=(n,d=2)=>n.toLocaleString("de-DE",{minimumFractionDigits:d,maximumFractionDigits:d});
+const fmt0=n=>n.toLocaleString("de-DE");
+const CALC = [
+{id:"tkp",n:"TKP",f:"TKP = Kosten ÷ Impressionen × 1.000",g(){const k=rnd(2000,30000,500),i=rnd(200000,3000000,50000);const a=k/i*1000;return{given:[["Kampagnenkosten",fmt0(k)+" €"],["Impressionen",fmt0(i)]],q:"Berechne den TKP.",ans:a,unit:"€",steps:`TKP = ${fmt0(k)} € ÷ ${fmt0(i)} × 1.000\n    = ${fmt(a)} €\n→ 1.000 Kontakte kosten ${fmt(a)} €.`}}},
+{id:"ctr",n:"CTR",f:"CTR = Klicks ÷ Impressionen × 100",g(){const i=rnd(100000,2000000,10000),c=Math.round(i*rnd(0.4,3,0.1)/100);const a=c/i*100;return{given:[["Impressionen",fmt0(i)],["Klicks",fmt0(c)]],q:"Berechne die Click-Through-Rate in %.",ans:a,unit:"%",steps:`CTR = ${fmt0(c)} ÷ ${fmt0(i)} × 100\n    = ${fmt(a)} %`}}},
+{id:"cr",n:"Conversion Rate",f:"CR = Käufe ÷ Besucher × 100",g(){const v=rnd(2000,40000,100),k=Math.round(v*rnd(0.5,5,0.1)/100);const a=k/v*100;return{given:[["Besucher (Klicks)",fmt0(v)],["Käufe",fmt0(k)]],q:"Berechne die Conversion Rate in %.",ans:a,unit:"%",steps:`CR = ${fmt0(k)} ÷ ${fmt0(v)} × 100\n   = ${fmt(a)} %`}}},
+{id:"cpo",n:"CPO",f:"CPO = Werbekosten ÷ Bestellungen",g(){const k=rnd(3000,40000,500),b=rnd(60,900,1);const a=k/b;return{given:[["Werbekosten",fmt0(k)+" €"],["Bestellungen",fmt0(b)]],q:"Berechne den Cost per Order.",ans:a,unit:"€",steps:`CPO = ${fmt0(k)} € ÷ ${fmt0(b)}\n    = ${fmt(a)} € je Bestellung`}}},
+{id:"roas",n:"ROAS",f:"ROAS = Umsatz ÷ Werbekosten",g(){const k=rnd(2000,30000,500),b=rnd(80,800,1),w=rnd(60,400,5);const u=b*w,a=u/k;return{given:[["Werbekosten",fmt0(k)+" €"],["Bestellungen",fmt0(b)],["Ø Warenkorb",fmt0(w)+" €"]],q:"Berechne den ROAS (als Faktor, z. B. 3,25).",ans:a,unit:"",steps:`Umsatz = ${fmt0(b)} × ${fmt0(w)} € = ${fmt0(u)} €\nROAS   = ${fmt0(u)} € ÷ ${fmt0(k)} €\n       = ${fmt(a)}\n→ Je 1 € Werbung ${fmt(a)} € Umsatz.`}}},
+{id:"kdb",n:"Kampagnen-DB",f:"Kampagnenergebnis = Umsatz × DB-Quote − Werbekosten",g(){const k=rnd(5000,30000,500),u=rnd(30000,150000,1000),q=rnd(25,55,5);const d=u*q/100,a=d-k;return{given:[["Umsatz aus Kampagne",fmt0(u)+" €"],["DB-Quote",q+" %"],["Werbekosten",fmt0(k)+" €"]],q:"Wie hoch ist das Kampagnenergebnis (DB nach Werbekosten)?",ans:a,unit:"€",steps:`DB     = ${fmt0(u)} € × ${q} % = ${fmt(d)} €\nErgebnis = ${fmt(d)} € − ${fmt0(k)} €\n         = ${fmt(a)} €\n→ ${a>=0?"Positiv: die Kampagne hat sich gelohnt.":"Negativ: die Kampagne war unwirtschaftlich."}`}}},
+{id:"be",n:"Break-even",f:"Break-even-Menge = Fixkosten ÷ (Preis − variable Stückkosten)",g(){const p=rnd(150,900,10),v=Math.round(p*rnd(0.15,0.5,0.05)),fk=rnd(2000,15000,100);const db=p-v,a=fk/db;return{given:[["Preis je Leistung",fmt0(p)+" €"],["Variable Kosten je Leistung",fmt0(v)+" €"],["Fixkosten pro Monat",fmt0(fk)+" €"]],q:"Wie viele Leistungen pro Monat sind für den Break-even nötig? (auf 2 Nachkommastellen)",ans:a,unit:"Stück",steps:`db = ${fmt0(p)} € − ${fmt0(v)} € = ${fmt0(db)} €\nBEP = ${fmt0(fk)} € ÷ ${fmt0(db)} €\n    = ${fmt(a)} Stück\n→ Ab ${Math.ceil(a)} Leistungen pro Monat entsteht Gewinn.`}}},
+{id:"ma",n:"Marktanteil",f:"Marktanteil = eigener Umsatz ÷ Marktvolumen × 100",g(){const m=rnd(500000,20000000,100000),e=Math.round(m*rnd(2,25,0.5)/100/1000)*1000;const a=e/m*100;return{given:[["Marktvolumen",fmt0(m)+" €"],["Eigener Umsatz",fmt0(e)+" €"]],q:"Berechne den Marktanteil in %.",ans:a,unit:"%",steps:`MA = ${fmt0(e)} € ÷ ${fmt0(m)} € × 100\n   = ${fmt(a)} %`}}},
+{id:"rma",n:"Rel. Marktanteil",f:"Rel. MA = eigener MA ÷ MA des stärksten Konkurrenten",g(){const e=rnd(5,40,1),k=rnd(8,45,1);const a=e/k;return{given:[["Eigener Marktanteil",e+" %"],["Marktanteil stärkster Konkurrent",k+" %"]],q:"Berechne den relativen Marktanteil (Faktor).",ans:a,unit:"",steps:`rel. MA = ${e} % ÷ ${k} %\n        = ${fmt(a)}\n→ ${a>1?"Größer 1: Marktführer.":"Kleiner 1: nicht Marktführer."}`}}},
+{id:"el",n:"Preiselastizität",f:"Elastizität = % Mengenänderung ÷ % Preisänderung",g(){const p0=rnd(100,500,10),pp=rnd(5,20,1),m0=rnd(200,2000,10),mm=rnd(2,40,1);const p1=Math.round(p0*(1+pp/100)),m1=Math.round(m0*(1-mm/100));const dp=(p1-p0)/p0*100,dm=(m1-m0)/m0*100,a=dm/dp;return{given:[["Preis alt → neu",fmt0(p0)+" € → "+fmt0(p1)+" €"],["Absatz alt → neu",fmt0(m0)+" → "+fmt0(m1)]],q:"Berechne die Preiselastizität der Nachfrage.",ans:a,unit:"",steps:`Preisänderung = (${p1} − ${p0}) ÷ ${p0} × 100 = ${fmt(dp)} %\nMengenänderung = (${m1} − ${m0}) ÷ ${m0} × 100 = ${fmt(dm)} %\nElastizität = ${fmt(dm)} ÷ ${fmt(dp)} = ${fmt(a)}\n→ ${Math.abs(a)>1?"Elastisch: Kunden reagieren stark.":"Unelastisch: Kunden reagieren schwach."}`}}},
+{id:"abw",n:"Soll-Ist-Abweichung",f:"Abweichung % = (Ist − Soll) ÷ Soll × 100",g(){const s=rnd(20000,200000,1000),i=Math.round(s*rnd(0.7,1.25,0.01)/100)*100;const a=(i-s)/s*100;return{given:[["Soll-Umsatz",fmt0(s)+" €"],["Ist-Umsatz",fmt0(i)+" €"]],q:"Berechne die prozentuale Abweichung (mit Vorzeichen).",ans:a,unit:"%",steps:`Abw. = (${fmt0(i)} − ${fmt0(s)}) ÷ ${fmt0(s)} × 100\n     = ${fmt(a)} %`}}},
+{id:"grp",n:"GRP",f:"GRP = Reichweite % × Durchschnittskontakte",g(){const r=rnd(15,70,1),o=rnd(1.5,6,0.1);const a=r*o;return{given:[["Reichweite",r+" %"],["Ø Kontakte je erreichter Person",fmt(o,1)]],q:"Berechne die Gross Rating Points.",ans:a,unit:"GRP",steps:`GRP = ${r} × ${fmt(o,1)}\n    = ${fmt(a,1)}`}}},
+{id:"clv",n:"Kundenwert",f:"CLV (vereinfacht) = DB je Kunde und Jahr × Jahre der Kundenbeziehung",g(){const u=rnd(200,1500,50),q=rnd(30,70,5),j=rnd(2,8,1);const d=u*q/100,a=d*j;return{given:[["Umsatz je Kunde und Jahr",fmt0(u)+" €"],["DB-Quote",q+" %"],["Dauer der Kundenbeziehung",j+" Jahre"]],q:"Berechne den vereinfachten Kundenwert.",ans:a,unit:"€",steps:`DB je Jahr = ${fmt0(u)} € × ${q} % = ${fmt(d)} €\nCLV = ${fmt(d)} € × ${j}\n    = ${fmt(a)} €`}}}
+];
+
+/* ============ STATE ============ */
+const KEY="mfw-progress-v1";
+let S={lessons:{},quiz:{},cards:{},calc:{right:0,total:0}};
+try{const raw=localStorage.getItem(KEY);if(raw)S=Object.assign(S,JSON.parse(raw));}catch(e){}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}}
+
+const $=s=>document.querySelector(s);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[c]));
+const area=id=>AREAS.find(a=>a.id===id);
+
+/* ============ ROUTING ============ */
+const VIEWS=["start","lernen","quiz","karten","rechnen","pruefung"];
+function show(v){
+  if(!VIEWS.includes(v))v="start";
+  VIEWS.forEach(x=>{$("#view-"+x).hidden=x!==v;$("#tab-"+x).setAttribute("aria-selected",x===v?"true":"false");});
+  try{history.replaceState(null,"","#"+v);}catch(e){}
+  if(v==="start")renderStart();
+  if(v==="quiz"&&(!QZ||QZ.done))renderQuizStart();
+  if(v==="karten")renderKarten();
+  window.scrollTo(0,0);
+}
+document.querySelectorAll("nav.tabs button").forEach(b=>b.addEventListener("click",()=>show(b.dataset.view)));
+
+/* ============ START ============ */
+function areaStats(id){
+  const ls=LESSONS.filter(l=>l.a===id),done=ls.filter(l=>S.lessons[l.id]).length;
+  const cs=CARDS.filter(c=>c[0]===id),known=cs.filter(c=>S.cards[c[1]]).length;
+  const q=S.quiz[id];
+  return{ls:ls.length,done,cs:cs.length,known,q};
+}
+function renderStart(){
+  const exam=new Date("2027-03-01T08:00:00+01:00"),reg=new Date("2026-12-01T23:59:00+01:00"),now=new Date();
+  const days=Math.max(0,Math.ceil((exam-now)/864e5)),regDays=Math.ceil((reg-now)/864e5);
+  const allL=LESSONS.length,doneL=LESSONS.filter(l=>S.lessons[l.id]).length;
+  const next=LESSONS.find(l=>!S.lessons[l.id]);
+  $("#view-start").innerHTML=`
+  <div style="display:flex;flex-direction:column;gap:8px">
+    <span class="eyebrow">Dein Lernstand</span>
+    <h1>Schritt für Schritt zum <span class="mk">Fachwirt für Marketing</span></h1>
+    <p class="lead">Lies die Lektionen, teste dich im Quiz, wiederhole mit Karteikarten und übe die Rechenaufgaben. Am Ende jeder Lektion markierst du sie als gelernt.</p>
+  </div>
+  <div class="grid2">
+    <div class="panel">
+      <span class="eyebrow">Nächster schriftlicher Termin</span>
+      <div class="countdown"><div><div class="big">${days}</div><div class="muted small">Tage bis 1./2. März 2027</div></div></div>
+      <p class="small muted">${regDays>0?`Anmeldeschluss z. B. bei der IHK Aschaffenburg: 1.12.2026 (noch ${regDays} Tage). Frist und Zulassung bei deiner IHK prüfen lassen.`:"Der Anmeldeschluss für März 2027 ist wahrscheinlich vorbei; der nächste Termin ist im Herbst 2027."}</p>
+    </div>
+    <div class="panel">
+      <span class="eyebrow">Gesamtfortschritt</span>
+      <div class="countdown"><div><div class="big">${doneL}<span class="muted" style="font-size:1.4rem">/${allL}</span></div><div class="muted small">Lektionen gelernt</div></div></div>
+      ${next?`<button class="btn" id="go-next">Weiter: ${esc(next.t)}</button>`:`<p><b>Alle Lektionen gelernt.</b> Jetzt Fallaufgaben im Tab „Prüfung“ üben.</p>`}
+    </div>
+  </div>
+  <h2>Die vier Prüfungsbereiche</h2>
+  <div class="grid2">${AREAS.map(a=>{const st=areaStats(a.id);const pct=Math.round(st.done/st.ls*100);return `
+    <div class="panel area-card" style="--c:${a.c}">
+      <h3><span class="n">${a.id}</span>${esc(a.name)}</h3>
+      <p class="small muted">${a.pts}</p>
+      <div class="bar"><i style="width:${pct}%"></i></div>
+      <div class="stat"><span>Lektionen</span><span>${st.done}/${st.ls}</span></div>
+      <div class="stat"><span>Bestes Quiz</span><span>${st.q!=null?st.q+" %":"–"}</span></div>
+      <div class="stat"><span>Karteikarten gewusst</span><span>${st.known}/${st.cs}</span></div>
+      <div class="row"><button class="chip" data-learn="${a.id}">Lernen</button><button class="chip" data-quiz="${a.id}">Quiz</button></div>
+    </div>`}).join("")}</div>
+  <div class="panel">
+    <h3>So läuft die Prüfung</h3>
+    <ul style="margin:0;padding-left:1.2em;display:flex;flex-direction:column;gap:4px">
+      <li><b>Schriftlich:</b> zwei Fallklausuren zu je 300 Minuten auf Basis einer betrieblichen Situationsbeschreibung, je 100 Punkte.</li>
+      <li><b>Mündlich:</b> Präsentation (höchstens 10 Minuten, zählt 1/3) und Fachgespräch (höchstens 20 Minuten, zählt 2/3).</li>
+      <li><b>Bestanden</b> mit jeweils mindestens 50 Punkten schriftlich und mündlich.</li>
+    </ul>
+    <p class="small muted">Rechenaufgaben richtig: ${S.calc.right} von ${S.calc.total}.</p>
+  </div>`;
+  const gn=$("#go-next");if(gn)gn.onclick=()=>{show("lernen");openLesson(next.id);};
+  document.querySelectorAll("[data-learn]").forEach(b=>b.onclick=()=>{show("lernen");setLearnArea(+b.dataset.learn);});
+  document.querySelectorAll("[data-quiz]").forEach(b=>b.onclick=()=>{show("quiz");startQuiz(+b.dataset.quiz);});
+}
+
+/* ============ LERNEN ============ */
+let learnArea=0;
+function renderLernen(){
+  const v=$("#view-lernen");
+  v.innerHTML=`<div style="display:flex;flex-direction:column;gap:8px"><span class="eyebrow">Lektionen</span><h1>Lernen</h1><p class="lead">Jede Lektion erklärt die Begriffe einfach, mit Praxisbeispielen aus verschiedenen Branchen und den typischen Prüfungsfallen.</p></div>
+  <div class="row" id="learn-filter">${[{id:0,short:"Alle"},...AREAS].map(a=>`<button class="chip" data-a="${a.id}" aria-pressed="${learnArea===a.id}">${a.id?a.id+" · ":""}${esc(a.short)}</button>`).join("")}</div>
+  <div id="lesson-list" style="display:flex;flex-direction:column;gap:10px"></div>`;
+  v.querySelectorAll("#learn-filter .chip").forEach(b=>b.onclick=()=>setLearnArea(+b.dataset.a));
+  renderLessonList();
+}
+function setLearnArea(id){learnArea=id;renderLernen();}
+function renderLessonList(){
+  const list=$("#lesson-list");let html="";
+  AREAS.filter(a=>!learnArea||a.id===learnArea).forEach(a=>{
+    html+=`<div class="area-head"><span class="dot" style="background:${a.c}"></span><h3>${a.id} · ${esc(a.name)}</h3><span class="pts">${a.pts}</span></div>`;
+    LESSONS.filter(l=>l.a===a.id).forEach(l=>{
+      const done=!!S.lessons[l.id];
+      html+=`<details class="lesson" id="L${l.id}" style="--c:${a.c}">
+        <summary><span class="check ${done?"done":""}">${done?"✓":""}</span><span class="t">${esc(l.t)}</span><span class="chev">›</span></summary>
+        <div class="lesson-body">${l.b.replace(/<div class="tbl">/g,"<div>").replace(/<table>/g,'<div class="tbl"><table>').replace(/<\/table>/g,"</table></div>")}
+          ${EX[l.id]?`<div class="box studio"><span class="lbl">Praxisbeispiel</span><p>${esc(EX[l.id])}</p></div>`:""}
+          ${l.trap?`<div class="box trap"><span class="lbl">Prüfungsfalle</span><p>${l.trap}</p></div>`:""}
+          ${l.exam?`<div class="box exam"><span class="lbl">Prüfungstipp</span><p>${l.exam}</p></div>`:""}
+          <div class="row"><button class="btn${done?" ghost":""}" data-done="${l.id}">${done?"Als ungelernt markieren":"Als gelernt markieren"}</button><button class="btn ghost" data-lq="${a.id}">Quiz zu Bereich ${a.id}</button></div>
+        </div></details>`;
+    });
+  });
+  list.innerHTML=html;
+  list.querySelectorAll("[data-done]").forEach(b=>b.onclick=()=>{const id=b.dataset.done;S.lessons[id]=!S.lessons[id];save();const d=document.getElementById("L"+id);const open=d.open;renderLessonList();const nd=document.getElementById("L"+id);if(S.lessons[id]){const idx=LESSONS.findIndex(l=>l.id===id);const nx=LESSONS[idx+1];if(nx&&(!learnArea||nx.a===learnArea)){nd.open=false;const n2=document.getElementById("L"+nx.id);if(n2){n2.open=true;n2.scrollIntoView({behavior:"smooth",block:"start"});}}}else nd.open=open;});
+  list.querySelectorAll("[data-lq]").forEach(b=>b.onclick=()=>{show("quiz");startQuiz(+b.dataset.lq);});
+}
+function openLesson(id){learnArea=0;renderLernen();const d=document.getElementById("L"+id);if(d){d.open=true;setTimeout(()=>d.scrollIntoView({block:"start"}),50);}}
+
+/* ============ QUIZ ============ */
+let QZ=null;
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function renderQuizStart(){
+  $("#view-quiz").innerHTML=`<div style="display:flex;flex-direction:column;gap:8px"><span class="eyebrow">Multiple Choice</span><h1>Quiz</h1><p class="lead">10 zufällige Fragen. Nach jeder Antwort siehst du die Erklärung. Dein bestes Ergebnis wird je Bereich gespeichert.</p></div>
+  <div class="grid2">${[{id:0,name:"Gemischt aus allen Bereichen",c:"var(--ink)"},...AREAS].map(a=>`<button class="panel area-card" style="--c:${a.c};text-align:left;cursor:pointer" data-start="${a.id}"><h3>${a.id?`<span class="n">${a.id}</span>`:""}${esc(a.name)}</h3><span class="small muted">${a.id?(S.quiz[a.id]!=null?"Bestes Ergebnis: "+S.quiz[a.id]+" %":"Noch nicht gespielt"):QUIZ.length+" Fragen im Pool"}</span></button>`).join("")}</div>`;
+  document.querySelectorAll("[data-start]").forEach(b=>b.onclick=()=>startQuiz(+b.dataset.start));
+}
+function startQuiz(aid){
+  const pool=QUIZ.filter(q=>!aid||q.a===aid);
+  QZ={aid,qs:shuffle(pool).slice(0,10).map(q=>{const idx=shuffle(q.o.map((_,i)=>i));return{...q,o:idx.map(i=>q.o[i]),r:idx.indexOf(q.r)};}),i:0,score:0,wrong:[]};
+  renderQ();
+}
+function renderQ(){
+  const q=QZ.qs[QZ.i],a=area(q.a);
+  $("#view-quiz").innerHTML=`<div class="panel qcard" style="--c:${a.c}">
+    <div class="qprog"><span><span class="dot" style="background:${a.c}"></span> ${esc(a.short)}</span><span>Frage ${QZ.i+1} von ${QZ.qs.length} · ${QZ.score} richtig</span></div>
+    <div class="bar"><i style="width:${QZ.i/QZ.qs.length*100}%"></i></div>
+    <p class="qtext">${esc(q.q)}</p>
+    <div class="opts">${q.o.map((o,i)=>`<button class="opt" data-i="${i}">${esc(o)}</button>`).join("")}</div>
+    <div id="qfb"></div>
+  </div><button class="btn ghost" id="qquit" style="align-self:flex-start">Quiz beenden</button>`;
+  document.querySelectorAll(".opt").forEach(b=>b.onclick=()=>answer(+b.dataset.i));
+  $("#qquit").onclick=renderQuizStart;
+}
+function answer(i){
+  const q=QZ.qs[QZ.i],ok=i===q.r;if(ok)QZ.score++;else QZ.wrong.push(q);
+  document.querySelectorAll(".opt").forEach((b,j)=>{b.disabled=true;if(j===q.r)b.classList.add("right");else if(j===i)b.classList.add("wrong");});
+  const last=QZ.i===QZ.qs.length-1;
+  $("#qfb").innerHTML=`<div class="feedback" style="--c:${ok?"var(--ok)":"var(--bad)"}"><b>${ok?"Richtig.":"Nicht ganz."}</b> ${esc(q.e)}</div><div class="row" style="margin-top:12px"><button class="btn" id="qnext">${last?"Ergebnis anzeigen":"Nächste Frage"}</button></div>`;
+  $("#qnext").onclick=()=>{if(last)finishQuiz();else{QZ.i++;renderQ();}};
+  $("#qnext").focus();
+}
+function finishQuiz(){
+  const pct=Math.round(QZ.score/QZ.qs.length*100);QZ.done=true;
+  if(QZ.aid){S.quiz[QZ.aid]=Math.max(S.quiz[QZ.aid]||0,pct);save();}
+  const msg=pct>=80?"Sehr gut, das sitzt.":pct>=50?"Bestanden-Niveau. Die falschen Themen noch einmal in den Lektionen lesen.":"Noch nicht sicher. Lies die Lektionen des Bereichs und versuch es dann noch einmal.";
+  $("#view-quiz").innerHTML=`<div class="panel" style="align-items:flex-start">
+    <span class="eyebrow">Ergebnis</span>
+    <div class="countdown"><div><div class="big">${QZ.score}/${QZ.qs.length}</div><div class="muted small">${pct} % richtig</div></div></div>
+    <p>${msg}</p>
+    ${QZ.wrong.length?`<div style="display:flex;flex-direction:column;gap:10px;width:100%"><h3>Das solltest du wiederholen</h3>${QZ.wrong.map(q=>`<div class="feedback" style="--c:${area(q.a).c}"><b>${esc(q.q)}</b><br>Richtig: ${esc(q.o[q.r])}<br><span class="small muted">${esc(q.e)}</span></div>`).join("")}</div>`:""}
+    <div class="row">${QZ.wrong.length?`<button class="btn" id="qwrong">Falsche Fragen wiederholen</button>`:""}<button class="btn${QZ.wrong.length?" ghost":""}" id="qagain">Noch einmal</button><button class="btn ghost" id="qback">Anderen Bereich wählen</button>${QZ.aid?`<button class="btn ghost" id="qlearn">Lektionen Bereich ${QZ.aid}</button>`:""}</div>
+  </div>`;
+  $("#qagain").onclick=()=>startQuiz(QZ.aid);
+  if($("#qwrong"))$("#qwrong").onclick=()=>{const w=QZ.wrong;QZ={aid:0,qs:shuffle(w),i:0,score:0,wrong:[]};renderQ();};$("#qback").onclick=renderQuizStart;
+  if($("#qlearn"))$("#qlearn").onclick=()=>{show("lernen");setLearnArea(QZ.aid);};
+}
+
+/* ============ KARTEIKARTEN ============ */
+let KA={area:0,deck:[],i:0};
+function buildDeck(){const pool=CARDS.filter(c=>!KA.area||c[0]===KA.area);const unknown=shuffle(pool.filter(c=>!S.cards[c[1]])),known=shuffle(pool.filter(c=>S.cards[c[1]]));KA.deck=unknown.concat(known);KA.i=0;}
+function renderKarten(){
+  const pool=CARDS.filter(c=>!KA.area||c[0]===KA.area),known=pool.filter(c=>S.cards[c[1]]).length;
+  const c=KA.deck[KA.i],a=c?area(c[0]):null;
+  $("#view-karten").innerHTML=`<div style="display:flex;flex-direction:column;gap:8px"><span class="eyebrow">Wiederholen</span><h1>Karteikarten</h1><p class="lead">Begriff ansehen, selbst erklären, dann umdrehen. Karten, die du noch nicht kannst, kommen zuerst.</p></div>
+  <div class="row" id="ka-filter">${[{id:0,short:"Alle"},...AREAS].map(x=>`<button class="chip" data-a="${x.id}" aria-pressed="${KA.area===x.id}">${x.id?x.id+" · ":""}${esc(x.short)}</button>`).join("")}</div>
+  <div class="stat"><span>Karte ${Math.min(KA.i+1,KA.deck.length)} von ${KA.deck.length}</span><span>${known} von ${pool.length} gewusst</span></div>
+  ${c?`<div class="flash" id="flash" tabindex="0" role="button" aria-label="Karte umdrehen">
+    <div class="flash-inner">
+      <div class="face"><span class="eyebrow" style="color:${a.c}">${a.id} · ${esc(a.short)}</span><div class="term">${esc(c[1])}</div><span class="hint">Tippen zum Umdrehen</span></div>
+      <div class="face back"><span class="eyebrow">${esc(c[1])}</span><p style="font-size:1.1rem">${esc(c[2])}</p></div>
+    </div></div>
+  <div class="row"><button class="btn ghost" id="ka-no">Nochmal üben</button><button class="btn" id="ka-yes">Kann ich</button></div>`:`<div class="panel"><p>Keine Karten in dieser Auswahl.</p></div>`}
+  <button class="btn ghost" id="ka-reset" style="align-self:flex-start">Stapel neu mischen</button>`;
+  document.querySelectorAll("#ka-filter .chip").forEach(b=>b.onclick=()=>{KA.area=+b.dataset.a;buildDeck();renderKarten();});
+  const f=$("#flash");if(f){const flip=()=>f.classList.toggle("flipped");f.onclick=flip;f.onkeydown=e=>{if(e.key===" "||e.key==="Enter"){e.preventDefault();flip();}};}
+  const step=k=>{S.cards[c[1]]=k;save();KA.i=(KA.i+1)%KA.deck.length;if(KA.i===0)buildDeck();renderKarten();};
+  if($("#ka-yes")){$("#ka-yes").onclick=()=>step(true);$("#ka-no").onclick=()=>step(false);}
+  $("#ka-reset").onclick=()=>{buildDeck();renderKarten();};
+}
+
+/* ============ RECHNEN ============ */
+let CA={type:"tkp",task:null,checked:false};
+function newTask(){const t=CALC.find(x=>x.id===CA.type);CA.task=t.g();CA.checked=false;renderRechnen();}
+function renderRechnen(){
+  const t=CALC.find(x=>x.id===CA.type),k=CA.task;
+  $("#view-rechnen").innerHTML=`<div style="display:flex;flex-direction:column;gap:8px"><span class="eyebrow">Controlling üben</span><h1>Rechentrainer</h1><p class="lead">Jede Aufgabe hat neue Zahlen. Gib dein Ergebnis mit Komma ein (z. B. 12,50). Geprüft wird auf 2 Nachkommastellen genau, kleine Rundungsunterschiede sind erlaubt.</p></div>
+  <div class="row" id="ca-types">${CALC.map(x=>`<button class="chip" data-t="${x.id}" aria-pressed="${x.id===CA.type}">${esc(x.n)}</button>`).join("")}</div>
+  <div class="panel calc">
+    <span class="eyebrow">${esc(t.n)}</span>
+    <div class="formula">${esc(t.f)}</div>
+    <div class="given">${k.given.map(g=>`<div><small>${esc(g[0])}</small><b>${esc(g[1])}</b></div>`).join("")}</div>
+    <p class="qtext">${esc(k.q)}</p>
+    <form id="ca-form" class="row"><label for="ca-in" class="small muted" style="width:100%">Dein Ergebnis${k.unit?" in "+esc(k.unit):""}</label><input id="ca-in" inputmode="decimal" autocomplete="off" placeholder="z. B. 12,50"><button class="btn" type="submit">Prüfen</button><button class="btn ghost" type="button" id="ca-new">Neue Aufgabe</button></form>
+    <div id="ca-res"></div>
+  </div>
+  <div class="panel"><h3>Alle Formeln</h3><div class="tbl"><table><tr><th>Kennzahl</th><th>Formel</th></tr>${CALC.map(x=>`<tr><td>${esc(x.n)}</td><td class="mono">${esc(x.f)}</td></tr>`).join("")}</table></div></div>`;
+  document.querySelectorAll("#ca-types .chip").forEach(b=>b.onclick=()=>{CA.type=b.dataset.t;newTask();});
+  $("#ca-new").onclick=newTask;
+  $("#ca-form").onsubmit=e=>{e.preventDefault();const raw=$("#ca-in").value.trim().replace(/\s|€|%/g,"").replace(/\./g,"").replace(",",".");const v=parseFloat(raw);
+    if(isNaN(v)){$("#ca-res").innerHTML=`<div class="feedback" style="--c:var(--bad)">Bitte eine Zahl eingeben, z. B. 12,50.</div>`;return;}
+    const tol=Math.max(0.011,Math.abs(k.ans)*0.002),ok=Math.abs(v-k.ans)<=tol;
+    if(!CA.checked){S.calc.total++;if(ok)S.calc.right++;save();CA.checked=true;}
+    $("#ca-res").innerHTML=`<div class="feedback" style="--c:${ok?"var(--ok)":"var(--bad)"}"><b>${ok?"Richtig.":"Noch nicht."}</b> Ergebnis: ${fmt(k.ans)}${k.unit?" "+esc(k.unit):""}</div><div class="steps">${esc(k.steps)}</div>`;};
+  $("#ca-in").focus({preventScroll:true});
+}
+
+/* ============ PRÜFUNG ============ */
+function renderPruefung(){
+  $("#view-pruefung").innerHTML=`<div style="display:flex;flex-direction:column;gap:8px"><span class="eyebrow">Prüfungstraining</span><h1>Prüfung</h1><p class="lead">So sind die Klausuren aufgebaut, so antwortest du richtig, und hier übst du eine Fallaufgabe im Originalformat.</p></div>
+  <div class="panel"><h3>Gewichtung der schriftlichen Prüfung (DIHK-Richtwerte)</h3>
+  <div class="tbl"><table><tr><th>Prüfungsbereich</th><th class="num">Klausur 1</th><th class="num">Klausur 2</th></tr>
+  ${AREAS.map(a=>{const p=a.pts.match(/\d+/g);return `<tr><td><span class="dot" style="background:${a.c}"></span> ${esc(a.name)}</td><td class="num">${p[1]} P</td><td class="num">${p[3]} P</td></tr>`}).join("")}
+  </table></div><p class="small muted">Klausur 1 ist strategie- und konzeptlastig, Klausur 2 prüft Umsetzung, Controlling und Führung. Beide 300 Minuten, je 100 Punkte.</p></div>
+  <div class="panel"><h3>Operatoren: so viel Antwort wird verlangt</h3>
+  <div class="tbl"><table><tr><th>Operator</th><th>Was du lieferst</th></tr>
+  <tr><td><b>Nennen</b></td><td>Stichwort ohne Begründung</td></tr>
+  <tr><td><b>Beschreiben</b></td><td>Sachverhalt in eigenen Worten darstellen</td></tr>
+  <tr><td><b>Erläutern / Erklären</b></td><td>Aussage + Begründung oder Beispiel („…, weil …“), am besten mit Bezug zum Fall</td></tr>
+  <tr><td><b>Begründen</b></td><td>Warum? Argumente aus der Situation</td></tr>
+  <tr><td><b>Beurteilen / Bewerten</b></td><td>Vor- und Nachteile abwägen, eigenes Urteil am Ende</td></tr>
+  <tr><td><b>Berechnen</b></td><td>Rechenweg zeigen, Einheit angeben, Ergebnis kurz deuten</td></tr>
+  <tr><td><b>Entwickeln / Erstellen</b></td><td>Eigene Lösung (Konzept, Plan, Tabelle) für den Fall ausarbeiten</td></tr></table></div>
+  <div class="box trap"><span class="lbl">Wichtig</span><p>Verlangt eine Aufgabe eine genaue Anzahl („Nennen Sie drei …“), werden nur die ersten Antworten gewertet. Mehr schreiben bringt nichts.</p></div></div>
+
+  <div class="panel"><span class="eyebrow">Fallaufgabe zum Üben · ca. 40 Punkte · 60 Minuten</span>
+  <h3>Situation: LUMEN Lichttechnik GmbH, Köln</h3>
+  <p>Mittelständischer Hersteller von LED-Leuchten für Foto und Film, 85 Mitarbeitende, 14 Mio. € Umsatz. Bisher Verkauf über den Fachhandel in Deutschland. Die Geschäftsführung plant den Markteintritt in Frankreich mit dem bestehenden Sortiment und ein neues Abo-Modell „Light-as-a-Service“ für Content Creator. Sie sind Leiter/in Marketing.</p>
+  ${[
+  {t:"Aufgabe 1 (15 P)",q:`<p>a) Ordnen Sie beide Vorhaben in die Ansoff-Matrix ein und begründen Sie. (4 P)<br>b) Erläutern Sie zwei Risiken des Markteintritts in Frankreich mit je einer Gegenmaßnahme. (6 P)<br>c) Schlagen Sie eine Markteintrittsform vor und begründen Sie. (5 P)</p>`,s:`<ul><li><b>a)</b> Frankreich: bestehendes Produkt, neuer räumlicher Markt = <b>Marktentwicklung</b>. Light-as-a-Service: neue Leistung (Abo statt Kauf) für eine neue Zielgruppe (Content Creator statt Fachhandel/Profis) = <b>Diversifikation</b> (horizontal). Vertretbar auch: Produktentwicklung, wenn man Content Creator als Teil des bisherigen Marktes sieht; dann muss die Begründung das sagen.</li><li><b>b)</b> z. B. 1. Fehlende Marktkenntnis und Kontakte zum französischen Handel → Marktforschung (Sekundär: Branchenberichte; primär: Interviews mit Händlern), Kooperation mit lokalem Vertriebspartner. 2. Sprachliche und rechtliche Unterschiede (Produktkennzeichnung, Gewährleistung, Werbung) → Übersetzung und Rechtsprüfung durch lokale Experten. Weitere: starke etablierte Konkurrenz, Kosten für Logistik und Service.</li><li><b>c)</b> z. B. <b>direkter Export über einen französischen Vertriebspartner/Importeur</b>: geringer Kapitaleinsatz, Partner kennt Markt und Handel, Risiko überschaubar; Nachteil: weniger Kontrolle und Marge. Eine eigene Tochtergesellschaft wäre für den Einstieg zu teuer und riskant.</li></ul>`},
+  {t:"Aufgabe 2 (14 P)",q:`<p>Eine Instagram-Kampagne: 24.000 € Budget, 1,6 Mio. Impressionen, 19.200 Klicks, 384 Käufe, Ø Warenkorb 290 €, DB-Quote 40 %.<br>a) Berechnen Sie TKP, CTR, Conversion Rate, CPO und ROAS. (8 P)<br>b) Berechnen Sie das Kampagnenergebnis nach Werbekosten und beurteilen Sie die Wirtschaftlichkeit. (6 P)</p>`,s:`<div class="steps">TKP  = 24.000 € ÷ 1.600.000 × 1.000 = 15,00 €
+CTR  = 19.200 ÷ 1.600.000 × 100      = 1,20 %
+CR   = 384 ÷ 19.200 × 100            = 2,00 %
+CPO  = 24.000 € ÷ 384                = 62,50 €
+Umsatz = 384 × 290 €                 = 111.360 €
+ROAS = 111.360 € ÷ 24.000 €          = 4,64
+
+DB = 111.360 € × 40 %                = 44.544 €
+Ergebnis = 44.544 € − 24.000 €       = 20.544 €</div><p><b>Beurteilung:</b> Die Kampagne ist wirtschaftlich: Sie deckt ihre Kosten und erwirtschaftet 20.544 € zusätzlichen Deckungsbeitrag. Der CPO von 62,50 € liegt deutlich unter dem DB je Bestellung (290 € × 40 % = 116 €). Einschränkung: Folgekäufe und Image-Effekte sind nicht erfasst, Mitnahmeeffekte (Kunden, die ohnehin gekauft hätten) möglich.</p>`},
+  {t:"Aufgabe 3 (11 P)",q:`<p>Ihre neue Social-Media-Managerin ist hoch motiviert, hat aber wenig Erfahrung. Mit dem Vertriebsleiter streitet sie über die Qualität der Leads.<br>a) Leiten Sie nach dem situativen Führungsmodell einen Führungsstil ab und begründen Sie. (4 P)<br>b) Beschreiben Sie den Ablauf eines Konfliktgesprächs in vier Schritten. (7 P)</p>`,s:`<ul><li><b>a)</b> Reifegrad <b>R2</b>: motiviert (willig), aber noch nicht fähig. Passend ist <b>S2 Überzeugen/Coachen</b>: Aufgaben und Entscheidungen erklären und begründen, eng begleiten, Fragen ermöglichen, Motivation durch Anerkennung erhalten. Reines Delegieren würde sie überfordern, reines Anweisen ihre Motivation bremsen.</li><li><b>b)</b> 1. <b>Vorbereitung:</b> Fakten zur Lead-Qualität sammeln, Ziel festlegen, neutralen Termin vereinbaren. 2. <b>Eröffnung:</b> Anlass nennen, Gesprächsregeln, sachliche Atmosphäre. 3. <b>Klärung:</b> beide schildern ihre Sicht, aktives Zuhören, Interessen herausarbeiten (z. B. Vertrieb will kaufbereite Leads, Social Media will Reichweite). 4. <b>Lösung und Vereinbarung:</b> gemeinsame Lead-Definition festlegen, Maßnahmen schriftlich mit Zuständigkeit und Termin, Folgetermin zur Kontrolle.</li></ul>`}
+  ].map((x,i)=>`<div class="reveal"><h4>${x.t}</h4>${x.q}<button class="btn ghost" data-sol="${i}" style="align-self:flex-start">Musterlösung zeigen</button><div class="solution" id="sol${i}" hidden>${x.s}</div></div>`).join("")}
+  </div>
+
+  <div class="panel"><h3>Mündliche Prüfung: Präsentationsthema finden</h3>
+  <p>Das Thema muss ein Problem aus der betrieblichen Praxis lösen und <b>mindestens einen Marketing-Bereich (1–3) mit Führung/Kommunikation (4) verknüpfen</b>. Einreichen zum Termin der zweiten Klausur, mit Kurzbeschreibung und Gliederung.</p>
+  <p class="small muted">Beispiele, die das Kriterium erfüllen:</p>
+  <ul style="margin:0;padding-left:1.2em;display:flex;flex-direction:column;gap:4px">
+    <li>Einführung eines Kundenbindungsprogramms im Einzelhandel und Schulung des Verkaufsteams (Konzept + Personalentwicklung)</li>
+    <li>Neukundengewinnung über Instagram und Steuerung eines Content-Teams mit Zielvereinbarungen (Kommunikationspolitik + Management by Objectives)</li>
+    <li>Auswertung von Kundenbeschwerden und Umsetzung von Verbesserungen mit Mitarbeitenden (Qualitätsmanagement + Kommunikation)</li>
+  </ul>
+  <div class="box exam"><span class="lbl">Aufbau in 10 Minuten</span><p>Ausgangssituation und Problem (1 Min.) → Ziel (1 Min.) → Analyse (2 Min.) → Lösungsalternativen und Bewertung (3 Min.) → Empfehlung mit Umsetzung, Kosten, Kontrolle (2 Min.) → Fazit (1 Min.). Im Fachgespräch fragen die Prüfer von dort aus in die Tiefe.</p></div></div>`;
+  document.querySelectorAll("[data-sol]").forEach(b=>b.onclick=()=>{const s=$("#sol"+b.dataset.sol);s.hidden=!s.hidden;b.textContent=s.hidden?"Musterlösung zeigen":"Musterlösung ausblenden";});
+}
+
+/* ============ INIT ============ */
+renderLernen();renderQuizStart();buildDeck();renderKarten();newTask();renderPruefung();
+const h=(location.hash||"").replace("#","");
+show(VIEWS.includes(h)?h:"start");
+</script>
+
+</body>
+</html>
